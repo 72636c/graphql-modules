@@ -17,7 +17,7 @@
     "@guild-docs/client": "^1.1.1",
     "@guild-docs/server": "^1.0.6",
     "@mdx-js/react": "^1.6.22",
-    "@theguild/components": "1.6.0",
+    "@theguild/components": "1.7.1",
     "framer-motion": "^4.1.17",
     "globby": "11.0.4",
     "next": "^11.1.2",
@@ -31,7 +31,7 @@
     "remark-admonitions": "^1.2.1",
     "remark-import-partial": "0.0.2",
     "shiki": "^0.9.12",
-    "styled-components": "5.3.1",
+    "styled-components": "5.3.3",
     "typescript": "4.4.4"
   },
   "browserslist": {
