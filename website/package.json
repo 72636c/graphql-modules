@@ -2,38 +2,61 @@
   "name": "website",
   "private": true,
   "scripts": {
-    "postinstall": "patch-package",
-    "start": "yarn api && docusaurus start",
-    "build": "yarn api && docusaurus build",
-    "deploy": "docusaurus deploy",
-    "api": "node ./scripts/api-doc.js"
+    "api": "node ./scripts/api-doc.js",
+    "dev": "concurrently -r \"next-remote-watch ./docs ./src/pages/_app.tsx ./src/pages/_document.tsx\" \"wait-on -s 1 http://localhost:3000 && open-cli http://localhost:3000\"",
+    "next": "next",
+    "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
-    "@docusaurus/core": "2.0.0-beta.9",
-    "@docusaurus/plugin-client-redirects": "2.0.0-beta.9",
-    "@docusaurus/plugin-ideal-image": "2.0.0-beta.9",
-    "@docusaurus/preset-classic": "2.0.0-beta.9",
-    "@theguild/components": "1.8.2",
-    "@phenomnomnominal/tsquery": "4.1.1",
+    "@chakra-ui/icons": "^1.0.15",
+    "@chakra-ui/react": "^1.6.9",
+    "@chakra-ui/theme-tools": "^1.2.1",
+    "@chakra-ui/utils": "^1.8.2",
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
+    "@guild-docs/client": "^1.1.1",
+    "@guild-docs/server": "^1.0.6",
+    "@mdx-js/react": "^1.6.22",
+    "@theguild/components": "1.6.0",
+    "framer-motion": "^4.1.17",
     "globby": "11.0.4",
+    "next": "^11.1.2",
+    "next-i18next": "^8.9.0",
+    "next-seo": "^4.28.1",
     "patch-package": "6.4.7",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-icons": "^4.3.1",
+    "react-use": "^17.3.1",
+    "remark-admonitions": "^1.2.1",
     "remark-import-partial": "0.0.2",
-    "styled-components": "5.3.3",
-    "the-guild-components": "1.5.3",
-    "typescript": "4.5.2"
+    "shiki": "^0.9.12",
+    "styled-components": "5.3.1",
+    "typescript": "4.4.4"
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "pnpm": { "overrides": { "esbuild": ">=0.13.4" } },
+  "resolutions": { "esbuild": ">=0.13.4" },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^11.1.2",
+    "@types/concurrently": "^6.3.0",
+    "@types/mdx-js__react": "^1.5.4",
+    "@types/node": "^16.10.5",
+    "@types/react": "^17.0.29",
+    "@types/react-dom": "^17.0.9",
+    "concurrently": "^6.3.0",
+    "cross-env": "^7.0.3",
+    "esbuild": "^0.13.5",
+    "esbuild-register": "^3.0.0",
+    "next-remote-watch": "^1.0.0",
+    "open-cli": "^7.0.1",
+    "wait-on": "^6.0.0"
   }
 }

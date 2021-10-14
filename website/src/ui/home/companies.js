@@ -1,10 +1,10 @@
 import React from 'react';
 import { List } from '../list';
 
-const airfranceLogo = `/img/home/companies/airfrance-logo.svg`;
-const klmLogo = `/img/home/companies/klm-logo.svg`;
-const msjLogo = `/img/home/companies/msj-logo.svg`;
-const schneiderLogo = `/img/home/companies/schneider-logo.svg`;
+const airfranceLogo = `/assets/img/home/companies/airfrance-logo.svg`;
+const klmLogo = `/assets/img/home/companies/klm-logo.svg`;
+const msjLogo = `/assets/img/home/companies/msj-logo.svg`;
+const schneiderLogo = `/assets/img/home/companies/schneider-logo.svg`;
 
 export function Companies(props) {
   return (

@@ -26,7 +26,7 @@ You can manage your own `context` object based on your needs, usually it's done 
 
 > To get familiar with Dependency Injection, please read the ["Dependency Injection - Introduction"](../di/introduction.md) chapter.
 
-The `Context` can be accessed directly in resolve function or within Dependency Injection using [`CONTEXT`](../api.md#context) token.
+The `Context` can be accessed directly in resolve function or within Dependency Injection using [`CONTEXT`](../api/api.md#context) token.
 
 ```typescript
 import { CONTEXT, Inject, Injectable } from 'graphql-modules';
