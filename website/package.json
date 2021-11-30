@@ -1,6 +1,7 @@
 {
-  "name": "website",
+  "name": "@graphql-modules/website",
   "private": true,
+  "version": "0.0.0",
   "scripts": {
     "api": "node ./scripts/api-doc.js",
     "dev": "concurrently -r \"next-remote-watch ./docs ./src/pages/_app.tsx ./src/pages/_document.tsx\" \"wait-on -s 1 http://localhost:3000 && open-cli http://localhost:3000\"",
@@ -35,15 +36,25 @@
     "typescript": "4.4.4"
   },
   "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
     ]
   },
-  "pnpm": { "overrides": { "esbuild": ">=0.13.4" } },
-  "resolutions": { "esbuild": ">=0.13.4" },
+  "pnpm": {
+    "overrides": {
+      "esbuild": ">=0.13.4"
+    }
+  },
+  "resolutions": {
+    "esbuild": ">=0.13.4"
+  },
   "devDependencies": {
     "@next/bundle-analyzer": "^11.1.2",
     "@types/concurrently": "^6.3.0",
