@@ -60,8 +60,8 @@ A return type of `createApplication` function.
 Application's configuration object. Represents the first argument of `createApplication` function.
 
 - `modules` - A list of GraphQL Modules
-- `providers` - A list of Providers - read the ["Providers and Tokens"](./di/providers) chapter.
-- `middlewares` - A map of middlewares - read the ["Middlewares"](./advanced/middlewares) chapter.
+- `providers` - A list of Providers - read the ["Providers and Tokens"](di/providers) chapter.
+- `middlewares` - A map of middlewares - read the ["Middlewares"](advanced/middlewares) chapter.
 - `schemaBuilder` - Creates a GraphQLSchema object out of typeDefs and resolvers
 
 ## createApplication
@@ -111,5 +111,5 @@ Module's configuration object. Represents the first argument of `createModule` f
 - `dirname` - Pass `__dirname` variable as a value to get better error messages.
 - `typeDefs` - An object or a list of GraphQL type definitions (SDL).
 - `resolvers` - An object or a list of GraphQL resolve functions.
-- `middlewares` - A map of middlewares - read the ["Middlewares"](./advanced/middlewares) chapter.
-- `providers` - A list of Providers - read the ["Providers and Tokens"](./di/providers) chapter.
+- `middlewares` - A map of middlewares - read the ["Middlewares"](advanced/middlewares) chapter.
+- `providers` - A list of Providers - read the ["Providers and Tokens"](di/providers) chapter.

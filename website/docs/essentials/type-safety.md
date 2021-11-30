@@ -43,7 +43,7 @@ const resolvers = {
 }
 ```
 
-Or assign it globally with [Graphql Code Generator](https://www.graphql-code-generator.com/docs/presets/graphql-modules):
+Or assign it globally with [Graphql Code Generator](https://graphql-code-generator.com/docs/presets/graphql-modules):
 
 ```yaml
 schema: './src/modules/*.graphql'
