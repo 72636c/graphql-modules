@@ -95,11 +95,11 @@ function AppContent(appProps: AppProps) {
             onClick: (e) => handlePushRoute('/docs', e),
           },
           {
-            children: 'Github',
+            children: 'GitHub',
             href: 'https://github.com/Urigo/graphql-modules',
             rel: 'noopener noreferrer',
             target: '_blank',
-            title: 'Explore in Github',
+            title: 'Explore in GitHub',
           },
         ]}
         cta={{
