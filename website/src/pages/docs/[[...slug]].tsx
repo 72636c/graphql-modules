@@ -1,11 +1,8 @@
+import type { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
-
 import { DocsContent, DocsTOC, MDXPage } from '@guild-docs/client';
 import { MDXPaths, MDXProps } from '@guild-docs/server';
-
 import { getRoutes } from '../../../routes';
-
-import type { GetStaticPaths, GetStaticProps } from 'next';
 
 export default MDXPage(function PostPage({
   content,
@@ -31,9 +28,7 @@ export const getStaticProps: GetStaticProps = (ctx) => {
       return readMarkdownFile('docs/', getArrayParam('slug'));
     },
     ctx,
-    {
-      getRoutes,
-    }
+    { getRoutes }
   );
 };
 
