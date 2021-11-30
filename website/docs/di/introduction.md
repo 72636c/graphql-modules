@@ -64,8 +64,8 @@ They are covered in [next chapter](./providers).
 
 ## Scopes
 
-Every `Provider` or `InjectionToken` is created once and the same instance is available for all incoming GraphQL Operations. That's the default behavior and it's under `Singleton` Scope.
+Every `Provider` or `InjectionToken` is created once and the same instance is available for all incoming GraphQL Operations. That's the default behavior, and it's under `Singleton` Scope.
 
 In GraphQL Modules, we have two kinds of scope, `Singleton` and `Operation`.
 
-`Operation` scope means that a service is created for each incoming GraphQL Operation and destroyed once request is resolved. Read more about [Scopes](./scopes.md) in a separate chapter.
+`Operation` scope means that a service is created for each incoming GraphQL Operation and destroyed once request is resolved. Read more about [Scopes](scopes) in a separate chapter.

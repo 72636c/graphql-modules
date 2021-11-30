@@ -7,7 +7,7 @@ Execution Context means the context of execution of GraphQL Operation. It's rela
 
 Why "especially useful in `Singletone`s"?
 
-As you know from ["Introduction to Dependency Injection"](../di/introduction.md) chapter, `Singleton`s can't directly access Operation scoped services, meaning they probably can't also directly access the context object created per each operation. Directly.
+As you know from ["Introduction to Dependency Injection"](../di/introduction) chapter, `Singleton`s can't directly access Operation scoped services, meaning they probably can't also directly access the context object created per each operation. Directly.
 
 Thanks to `@ExecutionContext` decorator, every `Singleton` provider gets access to the GraphQL Context and the Operation scoped Injector.
 
