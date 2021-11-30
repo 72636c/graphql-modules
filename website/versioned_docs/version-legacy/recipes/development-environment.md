@@ -103,7 +103,7 @@ And you can add custom mapping to your `tsconfig.json` file:
 You can now import files between modules like below:
 
 ```typescript
-import { SomeProvider } from '@modules/my-module';
+import { SomeProvider } from '@modules/my-module'
 ```
 
 #### Import from `.graphql` files
@@ -118,8 +118,8 @@ yarn add graphql-import-node
 ```
 
 ```typescript
-import 'graphql-import-node'; // You should add this at the begininng of your entry file.
-import * as UserTypeDefs from './user.graphql';
+import 'graphql-import-node' // You should add this at the begininng of your entry file.
+import * as UserTypeDefs from './user.graphql'
 ```
 
 ### Webpack
@@ -136,12 +136,12 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: './src/index.ts',
   output: {
-    filename: 'dist/server.js',
+    filename: 'dist/server.js'
   },
   resolve: {
     // Add `.ts` and `.tsx` as a resolvable extension
     extensions: ['.ts', '.tsx', '.js', '.graphql'],
-    plugins: [new TsconfigPathsPlugin()],
+    plugins: [new TsconfigPathsPlugin()]
   },
   module: {
     rules: [
@@ -149,11 +149,11 @@ module.exports = {
       {
         test: /\.(graphql|gql)$/,
         exclude: /node_modules/,
-        loader: 'graphql-tag/loader',
-      },
-    ],
-  },
-};
+        loader: 'graphql-tag/loader'
+      }
+    ]
+  }
+}
 ```
 
 ### TypeScript-Babel-Starter
@@ -163,7 +163,7 @@ You can use Babel for TypeScript with GraphQL Modules by using [TypeScript-Babel
 Still, if you use dependency injection, you have to decorate each property and argument in the providers manually even for the classes like below;
 
 ```typescript
-import { Injectable, Inject } from '@graphql-modules/di';
+import { Injectable, Inject } from '@graphql-modules/di'
 @Injectable()
 export class SomeProvider {
   constructor(@Inject(OtherProvider) private otherProvider: OtherProvider) {}
@@ -232,7 +232,7 @@ And add a script to your `package.json`:
 Also, make sure that each one of your spec files starts with:
 
 ```typescript
-import 'reflect-metadata';
+import 'reflect-metadata'
 ```
 
 ### Other Test Runners

@@ -24,10 +24,10 @@ GraphQL Modules won't load any other things such as injectors, resolvers and pro
 `src/schema.ts`
 
 ```typescript
-import { AppModule } from './modules/app.module';
+import { AppModule } from './modules/app.module'
 
 // Get typeDefs from top module, and export it
-export default AppModule.schema;
+export default AppModule.schema
 ```
 
 ## Creating Configuration for GraphQL Code Generator
@@ -71,14 +71,14 @@ You can add a script to `package.json`.
 Then you can use these generated typings everywhere in your project;
 
 ```typescript
-import { UsersProvider } from '../providers/users.provider';
-import { QueryResolvers } from '../../generated-models';
+import { UsersProvider } from '../providers/users.provider'
+import { QueryResolvers } from '../../generated-models'
 
 export const Query: QueryResolvers = {
   // all parameters and return value are typed
   users: (root, args, context, info) =>
-    context.injector.get(UsersProvider).getUsers(args),
-};
+    context.injector.get(UsersProvider).getUsers(args)
+}
 ```
 
 The article **[Writing Strict-Typed GraphQL TypeScript project w/ GraphQL Modules and GraphQL Code Generator](https://medium.com/p/c22f6caa17b8)** explains why you would need this integration.

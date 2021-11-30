@@ -4,8 +4,8 @@ title: Get Started
 sidebar_label: Get Started
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
 To start using GraphQL Modules, all you need is to install it's package and `graphql`.
 
@@ -38,24 +38,24 @@ values={[
 To create a Module, use `createModule`:
 
 ```typescript
-import { createModule, gql } from 'graphql-modules';
+import { createModule, gql } from 'graphql-modules'
 
 export const myModule = createModule({
   id: 'my-module',
   dirname: __dirname,
   typeDefs: [
     gql`
-        type Query {
-            hello: String!
-        }
-    `,
+      type Query {
+        hello: String!
+      }
+    `
   ],
   resolvers: {
     Query: {
-      hello: () => 'world',
-    },
-  },
-});
+      hello: () => 'world'
+    }
+  }
+})
 ```
 
 Each module contains GraphQL Type definitions, unique id and optionally resolvers.
@@ -77,16 +77,16 @@ At this point, this module acts like a types "capsule" you can load and import t
 As mentioned before, Modules create Application, so let's create one. We are importing the module we created earlier, and provide it to the application:
 
 ```typescript
-import { createApplication } from 'graphql-modules';
-import { myModule } from './my-module';
+import { createApplication } from 'graphql-modules'
+import { myModule } from './my-module'
 
 // This is your application, it contains your GraphQL schema and the implementation of it.
 const application = createApplication({
-  modules: [myModule],
-});
+  modules: [myModule]
+})
 
 // This is your actual GraphQL schema
-const mySchema = application.schema;
+const mySchema = application.schema
 ```
 
 > Application doesn't allow providing schemas or resolvers, since it's only a loader of your various modules.
@@ -115,18 +115,18 @@ values={[
 If you are using [Apollo-Server](https://github.com/apollographql/apollo-server), you can use `createSchemaForApollo` to get a schema that is adapted for this server, and integrates with it perfectly.
 
 ```typescript title="/src/server.ts"
-import { ApolloServer } from 'apollo-server';
-import { application } from './application';
+import { ApolloServer } from 'apollo-server'
+import { application } from './application'
 
-const schema = application.createSchemaForApollo();
+const schema = application.createSchemaForApollo()
 
 const server = new ApolloServer({
-  schema,
-});
+  schema
+})
 
 server.listen().then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`);
-});
+  console.log(`🚀 Server ready at ${url}`)
+})
 ```
 
 </TabItem>
@@ -135,27 +135,27 @@ server.listen().then(({ url }) => {
 If you are using [Express-GraphQL](https://github.com/graphql/express-graphql), here's how you do it:
 
 ```typescript title="/src/server.ts"
-import express from 'express';
-import graphqlHTTP from 'express-graphql';
-import { application } from './application';
+import express from 'express'
+import graphqlHTTP from 'express-graphql'
+import { application } from './application'
 
-const execute = application.createExecution();
-const schema = application.schema;
+const execute = application.createExecution()
+const schema = application.schema
 
-const server = express();
+const server = express()
 
 server.use(
   '/',
   graphqlHTTP({
     schema,
     customExecuteFn: execute,
-    graphiql: true,
+    graphiql: true
   })
-);
+)
 
 server.listen(4000, () => {
-  console.log(`🚀 Server ready at http://localhost:4000/`);
-});
+  console.log(`🚀 Server ready at http://localhost:4000/`)
+})
 ```
 
 </TabItem>
@@ -164,21 +164,21 @@ server.listen(4000, () => {
 If you are using [GraphQL-Helix](https://github.com/contrawork/graphql-helix), here's how you do it:
 
 ```typescript title="/src/server.ts"
-import express from 'express';
-import { getGraphQLParameters, processRequest } from 'graphql-helix';
-import { application } from './application';
+import express from 'express'
+import { getGraphQLParameters, processRequest } from 'graphql-helix'
+import { application } from './application'
 
-const app = express();
-app.use(express.json());
+const app = express()
+app.use(express.json())
 
 app.use('/graphql', async (req, res) => {
   const request = {
     body: req.body,
     headers: req.headers,
     method: req.method,
-    query: req.query,
-  };
-  const { operationName, query, variables } = getGraphQLParameters(request);
+    query: req.query
+  }
+  const { operationName, query, variables } = getGraphQLParameters(request)
 
   const result = await processRequest({
     operationName,
@@ -187,17 +187,17 @@ app.use('/graphql', async (req, res) => {
     request,
     schema: application.schema,
     execute: application.createExecution(),
-    subscribe: application.createSubscription(),
-  });
+    subscribe: application.createSubscription()
+  })
 
-  result.headers.forEach(({ name, value }) => res.setHeader(name, value));
-  res.status(result.status);
-  res.json(result.payload);
-});
+  result.headers.forEach(({ name, value }) => res.setHeader(name, value))
+  res.status(result.status)
+  res.json(result.payload)
+})
 
 app.listen(port, () => {
-  console.log(`GraphQL server is running on port ${port}.`);
-});
+  console.log(`GraphQL server is running on port ${port}.`)
+})
 ```
 
 </TabItem>
@@ -206,15 +206,15 @@ app.listen(port, () => {
 If you are using a different server or setup, you can get the custom `execute` and `subscribe` functions from your `Application`, and provide it to your server:
 
 ```typescript
-import { createApplication } from 'graphql-modules';
+import { createApplication } from 'graphql-modules'
 
 const application = createApplication({
   /* ... */
-});
+})
 
-const schema = application.schema;
-const execute = application.createExecution();
-const subscribe = application.createSubscription();
+const schema = application.schema
+const execute = application.createExecution()
+const subscribe = application.createSubscription()
 ```
 
 In case you are still having issues, you can always [report an issue on a missing integration](https://github.com/Urigo/graphql-modules/issues/new), and we'll look into that ;)

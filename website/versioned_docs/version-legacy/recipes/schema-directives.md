@@ -61,6 +61,6 @@ const { schema } = new GraphQLModule({
   typeDefs,
   resolvers,
   schemaDirectives,
-  visitSchemaDirectives: true,
-});
+  visitSchemaDirectives: true
+})
 ```

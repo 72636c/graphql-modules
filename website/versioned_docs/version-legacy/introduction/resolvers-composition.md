@@ -17,7 +17,7 @@ const resolvers = {
     myQuery: (root, args, context) => {
       // Make sure that the user is authenticated
       if (!context.currentUser) {
-        throw new Error('You are not authenticated!');
+        throw new Error('You are not authenticated!')
       }
 
       // Make sure that the user has the correct roles
@@ -25,18 +25,18 @@ const resolvers = {
         !context.currentUser.roles ||
         !context.currentUser.roles.includes('EDITOR')
       ) {
-        throw new Error('You are not authorized!');
+        throw new Error('You are not authorized!')
       }
 
       // Business logic
       if (args.something === '1') {
-        return true;
+        return true
       }
 
-      return false;
-    },
-  },
-};
+      return false
+    }
+  }
+}
 ```
 
 But the authorization checks are not part of your business logic;
@@ -53,13 +53,13 @@ const resolvers = {
   Query: {
     myQuery: (root, args, context) => {
       if (args.something === '1') {
-        return true;
+        return true
       }
 
-      return false;
-    },
-  },
-};
+      return false
+    }
+  }
+}
 ```
 
 And let's create utility functions in different files with the logic we have removed here.
@@ -67,44 +67,39 @@ And let's create utility functions in different files with the logic we have rem
 We can implement authentication and authorization just like GraphQL resolvers; we need to tell GraphQL Modules that the process has succeeded by calling the `next` function.
 
 ```typescript
-export const isAuthenticated = () => (next) => async (
-  root,
-  args,
-  context,
-  info
-) => {
-  if (!context.currentUser) {
-    throw new Error('You are not authenticated!');
+export const isAuthenticated =
+  () => next => async (root, args, context, info) => {
+    if (!context.currentUser) {
+      throw new Error('You are not authenticated!')
+    }
+
+    return next(root, args, context, info)
   }
 
-  return next(root, args, context, info);
-};
+export const hasRole =
+  (role: string) => next => async (root, args, context, info) => {
+    if (
+      !context.currentUser.roles ||
+      !context.currentUser.roles.includes(role)
+    ) {
+      throw new Error('You are not authorized!')
+    }
 
-export const hasRole = (role: string) => (next) => async (
-  root,
-  args,
-  context,
-  info
-) => {
-  if (!context.currentUser.roles || !context.currentUser.roles.includes(role)) {
-    throw new Error('You are not authorized!');
+    return next(root, args, context, info)
   }
-
-  return next(root, args, context, info);
-};
 ```
 
 Now in our `GraphQLModule` declaration, let's add `resolversComposition` with a map from `TypeName.fieldName` to the function/functions we wish to wrap the resolver with.
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
+import { GraphQLModule } from '@graphql-modules/core'
 
 const MyModule = new GraphQLModule({
   /*...*/
   resolversComposition: {
-    'Query.myQuery': [isAuthenticated(), hasRole('EDITOR')],
-  },
-});
+    'Query.myQuery': [isAuthenticated(), hasRole('EDITOR')]
+  }
+})
 ```
 
 Before each execution of the `myQuery` resolver, GraphQL Modules makes sure to execute `isAuthenticated` and `hasRole`.
@@ -112,14 +107,14 @@ Before each execution of the `myQuery` resolver, GraphQL Modules makes sure to e
 Furthermore, if our logic applies to more than one resolver under `Query`, we can use wild cards.
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
+import { GraphQLModule } from '@graphql-modules/core'
 
 const MyModule = new GraphQLModule({
   /*...*/
   resolversComposition: {
-    'Query.*': [isAuthenticated(), hasRole('EDITOR')],
-  },
-});
+    'Query.*': [isAuthenticated(), hasRole('EDITOR')]
+  }
+})
 ```
 
 In this case, Before each execution of any resolver under `Query`, GraphQL Modules makes sure to execute `isAuthenticated` and `hasRole`.

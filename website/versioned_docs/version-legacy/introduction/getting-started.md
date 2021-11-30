@@ -15,13 +15,13 @@ Or Npm:
 Then, create your `GraphQLModule` instance:
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
+import { GraphQLModule } from '@graphql-modules/core'
 
 const graphQlModule = new GraphQLModule({
   typeDefs: [],
   resolvers: {},
-  imports: [],
-});
+  imports: []
+})
 ```
 
 `GraphQLModule` helps to manage your modules, GraphQL schema, resolvers and context builders with rich communication between the modules.

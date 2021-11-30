@@ -31,13 +31,13 @@ modules/
 You can easily load all of your `.graphql` files and `.ts` resolvers files like below:
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
-import { loadResolversFiles, loadSchemaFiles } from 'graphql-toolkit';
+import { GraphQLModule } from '@graphql-modules/core'
+import { loadResolversFiles, loadSchemaFiles } from 'graphql-toolkit'
 
 export const UserModule = new GraphQLModule({
   typeDefs: loadSchemaFiles(__dirname + '/schema/'),
-  resolvers: loadResolversFiles(__dirname + '/resolvers/'),
-});
+  resolvers: loadResolversFiles(__dirname + '/resolvers/')
+})
 ```
 
 This way, you don't have to specify each file and each resolver; the tools will do it for you.
@@ -49,14 +49,14 @@ You can also write your schema and resolvers in different files and then import 
 `modules/my-module/index.ts`
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
-import resolvers from './resolvers';
-import * as typeDefs from './schema.graphql';
+import { GraphQLModule } from '@graphql-modules/core'
+import resolvers from './resolvers'
+import * as typeDefs from './schema.graphql'
 
 export const UserModule = new GraphQLModule({
   resolvers,
-  typeDefs,
-});
+  typeDefs
+})
 ```
 
 `modules/my-module/resolvers.ts`
@@ -64,12 +64,12 @@ export const UserModule = new GraphQLModule({
 ```typescript
 export default {
   User: {
-    id: () => {},
+    id: () => {}
   },
   Query: {
-    user: () => {},
-  },
-};
+    user: () => {}
+  }
+}
 ```
 
 `modules/my-module/schema.graphql`
@@ -89,17 +89,17 @@ type Query {
 The simplest way to load your schema and resolvers into a module is to write them directly on your `GraphQLModule` definition:
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
-import gql from 'graphql-tag';
+import { GraphQLModule } from '@graphql-modules/core'
+import gql from 'graphql-tag'
 
 export const UserModule = new GraphQLModule({
   resolvers: {
     User: {
-      id: () => {},
+      id: () => {}
     },
     Query: {
-      user: () => {},
-    },
+      user: () => {}
+    }
   },
   typeDefs: gql`
     type User {
@@ -109,6 +109,6 @@ export const UserModule = new GraphQLModule({
     type Query {
       user(id: Int!): User
     }
-  `,
-});
+  `
+})
 ```

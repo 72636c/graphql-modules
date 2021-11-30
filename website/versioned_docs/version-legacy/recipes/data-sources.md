@@ -20,17 +20,17 @@ See also **[Data sources - Apollo Server](https://www.apollographql.com/docs/apo
 ## REST Data Source Example
 
 ```typescript
-import { RESTDataSource } from 'apollo-datasource-rest';
-import { Injectable } from '@graphql-modules/di';
+import { RESTDataSource } from 'apollo-datasource-rest'
+import { Injectable } from '@graphql-modules/di'
 
 @Injectable({
-  scope: ProviderScope.Session,
+  scope: ProviderScope.Session
 })
 export class MoviesAPI extends RESTDataSource {
-  baseURL = 'https://movies-api.example.com/';
+  baseURL = 'https://movies-api.example.com/'
 
   async getMovie(id) {
-    return this.get(`movies/${id}`);
+    return this.get(`movies/${id}`)
   }
 
   // an example of making an HTTP POST request
@@ -38,7 +38,7 @@ export class MoviesAPI extends RESTDataSource {
     return this.post(
       `movies`, // path
       movie // request body
-    );
+    )
   }
 
   // an example of making an HTTP PUT request
@@ -46,7 +46,7 @@ export class MoviesAPI extends RESTDataSource {
     return this.put(
       `movies`, // path
       movie // request body
-    );
+    )
   }
 
   // an example of making an HTTP PATCH request
@@ -54,14 +54,14 @@ export class MoviesAPI extends RESTDataSource {
     return this.patch(
       `movies`, // path
       { id: movie.id, movie } // request body
-    );
+    )
   }
 
   // an example of making an HTTP DELETE request
   async deleteMovie(movie) {
     return this.delete(
       `movies/${movie.id}` // path
-    );
+    )
   }
 }
 ```
@@ -71,8 +71,8 @@ export class MoviesAPI extends RESTDataSource {
 Then add this data source provider to our module, and you can use that data source in your resolvers just like other kinds of providers.
 
 ```typescript
-import { MoviesAPI } from './movies-api.provider';
-import { GraphQLModule } from '@graphql-modules/core';
+import { MoviesAPI } from './movies-api.provider'
+import { GraphQLModule } from '@graphql-modules/core'
 
 export const MoviesModule = new GraphQLModules({
   providers: [MoviesAPI],
@@ -89,10 +89,10 @@ export const MoviesModule = new GraphQLModules({
   resolvers: {
     Query: {
       getMovie: (root, args, context, info) =>
-        context.injector.get(MoviesAPI).getMovie(args.id),
-    },
-  },
-});
+        context.injector.get(MoviesAPI).getMovie(args.id)
+    }
+  }
+})
 ```
 
 ## Using Memcached/Redis as a cache storage backend
@@ -101,7 +101,7 @@ As described in Apollo Server docs, GraphQL Modules also uses in-memory caching 
 But you can also use other cache mechanisms in your GraphQL Modules application.
 
 ```typescript
-import { MemcachedCache } from 'apollo-server-cache-memcached';
+import { MemcachedCache } from 'apollo-server-cache-memcached'
 
 export const MoviesModule = new GraphQLModules({
   providers: [MoviesAPI],
@@ -110,19 +110,19 @@ export const MoviesModule = new GraphQLModules({
   cache: new MemcachedCache(
     ['memcached-server-1', 'memcached-server-2', 'memcached-server-3'],
     { retries: 10, retry: 10000 } // Options
-  ),
-});
+  )
+})
 ```
 
 You can share GraphQL Modules cache mechanism with your GraphQL Server.
 
 ```typescript
-const { schema, selfCache } = YourGraphQLModule;
+const { schema, selfCache } = YourGraphQLModule
 
 new ApolloServer({
   schema,
-  cache: selfCache,
-});
+  cache: selfCache
+})
 ```
 
 See also **[Using Memcached/Redis as a cache storage backend](https://www.apollographql.com/docs/apollo-server/data/data-sources/#using-memcachedredis-as-a-cache-storage-backend)**

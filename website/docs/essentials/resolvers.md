@@ -14,7 +14,7 @@ Modules created by GraphQL-Modules are smart enough to detect incorrect resolver
 Let's take for an example the following schema for `User` and `Query`.
 
 ```typescript
-import { createModule, gql } from 'graphql-modules';
+import { createModule, gql } from 'graphql-modules'
 
 export const myModule = createModule({
   id: 'my-module',
@@ -34,20 +34,20 @@ export const myModule = createModule({
       user(root, { id }) {
         return {
           _id: id,
-          username: 'jhon',
-        };
-      },
+          username: 'jhon'
+        }
+      }
     },
     User: {
       id(user) {
-        return user._id;
+        return user._id
       },
       username(user) {
-        return user.username;
-      },
-    },
-  },
-});
+        return user.username
+      }
+    }
+  }
+})
 ```
 
 ## Dynamically Load resolvers files
@@ -61,14 +61,14 @@ Start by installing this package:
 Next, use it to load your files dynamically:
 
 ```ts
-import MyQueryType from './query.type.graphql';
-import { createModule } from 'graphql-modules';
-import { loadFilesSync } from '@graphql-tools/load-files';
+import MyQueryType from './query.type.graphql'
+import { createModule } from 'graphql-modules'
+import { loadFilesSync } from '@graphql-tools/load-files'
 
 export const myModule = createModule({
   id: 'my-module',
   dirname: __dirname,
   typeDefs: loadFilesSync(join(__dirname, './typeDefs/*.graphql')),
-  resolvers: loadFilesSync(join(__dirname, './resolvers/*.ts')),
-});
+  resolvers: loadFilesSync(join(__dirname, './resolvers/*.ts'))
+})
 ```

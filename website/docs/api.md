@@ -10,7 +10,7 @@ title: API Reference
 `CONTEXT` is an InjectionToken representing the provided `GraphQLModules.GlobalContext`
 
 ```typescript
-import { CONTEXT, Inject, Injectable } from 'graphql-modules';
+import { CONTEXT, Inject, Injectable } from 'graphql-modules'
 
 @Injectable()
 export class Data {
@@ -25,12 +25,12 @@ export class Data {
 `MODULE_ID` is an InjectionToken representing module's ID
 
 ```typescript
-import { MODULE_ID, Inject, Injectable } from 'graphql-modules';
+import { MODULE_ID, Inject, Injectable } from 'graphql-modules'
 
 @Injectable()
 export class Data {
   constructor(@Inject(MODULE_ID) moduleId: string) {
-    console.log(`Data used in ${moduleId} module`);
+    console.log(`Data used in ${moduleId} module`)
   }
 }
 ```
@@ -71,14 +71,14 @@ Application's configuration object. Represents the first argument of `createAppl
 Creates Application out of Modules. Accepts `ApplicationConfig`.
 
 ```typescript
-import { createApplication } from 'graphql-modules';
-import { usersModule } from './users';
-import { postsModule } from './posts';
-import { commentsModule } from './comments';
+import { createApplication } from 'graphql-modules'
+import { usersModule } from './users'
+import { postsModule } from './posts'
+import { commentsModule } from './comments'
 
 const app = createApplication({
-  modules: [usersModule, postsModule, commentsModule],
-});
+  modules: [usersModule, postsModule, commentsModule]
+})
 ```
 
 ## createModule
@@ -88,7 +88,7 @@ const app = createApplication({
 Creates a Module, an element used by Application. Accepts `ModuleConfig`.
 
 ```typescript
-import { createModule, gql } from 'graphql-modules';
+import { createModule, gql } from 'graphql-modules'
 
 export const usersModule = createModule({
   id: 'users',
@@ -97,8 +97,8 @@ export const usersModule = createModule({
   `,
   resolvers: {
     // ...
-  },
-});
+  }
+})
 ```
 
 ## ModuleConfig

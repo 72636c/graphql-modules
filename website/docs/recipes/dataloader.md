@@ -40,22 +40,22 @@ You don't need to create
 ## DataLoader in a Service
 
 ```typescript
-import { Injectable, Scope } from 'graphql-modules';
-import DataLoader from 'dataloader';
-import { MyExternalDataProvider } from './my-external-data-provider';
+import { Injectable, Scope } from 'graphql-modules'
+import DataLoader from 'dataloader'
+import { MyExternalDataProvider } from './my-external-data-provider'
 
 @Injectable({
-  scope: Scope.Operation,
+  scope: Scope.Operation
 })
 export class UserProvider {
-  private dataLoader = new DataLoader((keys) =>
+  private dataLoader = new DataLoader(keys =>
     this.myDataProvider.findUsers(keys)
-  );
+  )
 
   constructor(private myDataProvider: MyExternalDataProvider) {}
 
   getUserById(userId: string) {
-    return this.dataLoader.load(userId);
+    return this.dataLoader.load(userId)
   }
 }
 ```

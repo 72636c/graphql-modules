@@ -19,16 +19,16 @@ See **[Dependency Injection](../introduction/dependency-injection.md)** to learn
 `database.module.ts`
 
 ```typescript
-import { Pool } from 'pg';
+import { Pool } from 'pg'
 export const DatabaseModule = new GraphQLModule({
   providers: [
     Pool,
     // or you can use factory providers
     // to pass extra options to the constructor
     // { provide: Pool, useFactory: () => new Pool({ ... }) }
-    DatabaseProvider,
-  ],
-});
+    DatabaseProvider
+  ]
+})
 ```
 
 > You can define external classes as **Provider** in GraphQL Modules. In the example above, `Pool` will be constructed once in the application scope.
@@ -41,26 +41,26 @@ See **[Dependency Injection](../introduction/dependency-injection.md)** to learn
 `database.provider.ts`
 
 ```typescript
-import { Injectable } from '@graphql-modules/di';
-import { SQLStatement } from 'sql-template-strings';
-import { Pool, PoolClient } from 'pg';
+import { Injectable } from '@graphql-modules/di'
+import { SQLStatement } from 'sql-template-strings'
+import { Pool, PoolClient } from 'pg'
 
 @Injectable({
-  scope: ProviderScope.Session,
+  scope: ProviderScope.Session
 })
 export class DatabaseProvider implements OnRequest, OnResponse {
-  private _poolClient: PoolClient;
+  private _poolClient: PoolClient
   constructor(private pool: Pool) {}
-  public onRequest() {
-    this._poolClient = await this.pool.connect();
+  public async onRequest() {
+    this._poolClient = await this.pool.connect()
   }
   public onResponse() {
     if (this._poolClient) {
-      this._poolClient.release();
+      this._poolClient.release()
     }
   }
   async getClient() {
-    return this.client;
+    return this.client
   }
 }
 ```
@@ -70,49 +70,49 @@ You can also combine it with data-loaders to solve the `N+1` problem in SQL quer
 `database.provider.ts`
 
 ```typescript
-import { Pool, PoolClient, QueryResultBase, QueryResult } from 'pg';
-import { Injectable, ProviderScope } from '@graphql-modules/di';
-import { OnRequest, OnResponse } from '@graphql-modules/core';
-import { SQLStatement } from 'sql-template-strings';
-import DataLoader from 'dataloader';
+import { Pool, PoolClient, QueryResultBase, QueryResult } from 'pg'
+import { Injectable, ProviderScope } from '@graphql-modules/di'
+import { OnRequest, OnResponse } from '@graphql-modules/core'
+import { SQLStatement } from 'sql-template-strings'
+import DataLoader from 'dataloader'
 
 @Injectable({
-  scope: ProviderScope.Session,
+  scope: ProviderScope.Session
 })
 export class DatabaseProvider implements OnRequest, OnResponse {
-  private _poolClient: PoolClient;
+  private _poolClient: PoolClient
   constructor(private pool: Pool) {}
-  public onRequest() {
-    this._poolClient = await this.pool.connect();
+  public async onRequest() {
+    this._poolClient = await this.pool.connect()
   }
   public onResponse() {
     if (this._poolClient) {
-      this._poolClient.release();
+      this._poolClient.release()
     }
   }
   private queryDataLoader = new DataLoader<SQLStatement, QueryResult>(
-    (queryStatementList) =>
+    queryStatementList =>
       Promise.all(
-        queryStatementList.map((queryStatement) =>
+        queryStatementList.map(queryStatement =>
           this._poolClient.query(queryStatement)
         )
       ),
     {
       // Create a cache key using query text together with its values
       cacheKeyFn: (queryStatement: SQLStatement) =>
-        queryStatement.text + queryStatement.values.join(','),
+        queryStatement.text + queryStatement.values.join(',')
     }
-  );
+  )
   // Use this method to query to the database instead of client's native one.
   public async query<Entity = any>(
     queryStatement: SQLStatement
   ): Promise<QueryResultBase & { rows: Entity[] }> {
     // If query is `SELECT`-type query, use DataLoader
     if (queryStatement.text.startsWith('SELECT')) {
-      return this.queryDataLoader.load(queryStatement);
+      return this.queryDataLoader.load(queryStatement)
     } else {
       // Otherwise it is probably mutation query, so do not use dataloader
-      return this._poolClient.query(queryStatement);
+      return this._poolClient.query(queryStatement)
     }
   }
 }
@@ -126,8 +126,8 @@ Thanks to this approach, you can use transactions inside GraphQL Modules like be
 
 ```typescript
 interface UserEntity {
-  id: string;
-  name: string;
+  id: string
+  name: string
   // some other fields
 }
 ```
@@ -135,43 +135,44 @@ interface UserEntity {
 `users.provider.ts`
 
 ```typescript
-import { UserEntity } from './user.entity';
+import { UserEntity } from './user.entity'
 
 @Injectable({
-  scope: ProviderScope.Session,
+  scope: ProviderScope.Session
 })
 export class UsersProvider {
-  private currentUserId: string;
+  private currentUserId: string
   constructor(
     private databaseProvider: DatabaseProvider,
     private moduleSessionInfo: ModuleSessionInfo,
     private someOtherProviderHasDbProcess: SomeOtherProviderHasDbProcess
   ) {
-    const token = this.moduleSessionInfo.session.req.headers.authorization;
+    const token = this.moduleSessionInfo.session.req.headers.authorization
     if (token) {
-      this.currentUserId = exchangeTokenWithUserId(token);
+      this.currentUserId = exchangeTokenWithUserId(token)
     }
   }
   async getCurrentUser() {
     const { rows } = await this.databaseProvider.query<UserEntity>(
       SQL`SELECT * FROM users WHERE id = ${this.currentUserId}`
-    );
-    return rows[0];
+    )
+    return rows[0]
   }
   async createNewUser(name: string, email: string, ...someOtherThings) {
     try {
-      await this.databaseProvider.query(SQL`BEGIN`);
+      await this.databaseProvider.query(SQL`BEGIN`)
 
-      const someEntityWeNeedForOtherQuery = await this.someOtherProviderHasDbProcess.doSomeProcess(
-        ...someOtherThings
-      );
+      const someEntityWeNeedForOtherQuery =
+        await this.someOtherProviderHasDbProcess.doSomeProcess(
+          ...someOtherThings
+        )
 
       // Other processes in a single transaction that uses the same client for all sessions
 
-      await this.databaseProvider.query(SQL`COMMIT`);
+      await this.databaseProvider.query(SQL`COMMIT`)
     } catch (e) {
-      await this.databaseProvider.query(SQL`ROLLBACK`);
-      throw e;
+      await this.databaseProvider.query(SQL`ROLLBACK`)
+      throw e
     }
   }
 }
@@ -184,9 +185,9 @@ You can create a MongoDB pool and connect it at the beginning of each network re
 `database.module.ts`
 
 ```typescript
-import { Pool, createPool } from 'generic-pool';
-import { MongoClient } from 'mongodb';
-import { GraphQLModule } from '@graphql-modules/core';
+import { Pool, createPool } from 'generic-pool'
+import { MongoClient } from 'mongodb'
+import { GraphQLModule } from '@graphql-modules/core'
 
 export const DatabaseModule = new GraphQLModule({
   providers: [
@@ -195,38 +196,38 @@ export const DatabaseModule = new GraphQLModule({
       useFactory: () =>
         createPool({
           create: () => MongoClient.connect('mongodb://YOUR_MONGO_URL_HERE'),
-          destroy: (client) => client.close(),
-        }),
+          destroy: client => client.close()
+        })
     },
-    DatabaseProvider,
-  ],
-});
+    DatabaseProvider
+  ]
+})
 ```
 
 `database.provider.ts`
 
 ```typescript
-import { Pool } from 'generic-pool';
-import { Injectable, ProviderScope } from '@graphql-modules/di';
-import { OnRequest, OnResponse } from '@graphql-modules/core';
-import { MongoClient } from 'mongodb';
+import { Pool } from 'generic-pool'
+import { Injectable, ProviderScope } from '@graphql-modules/di'
+import { OnRequest, OnResponse } from '@graphql-modules/core'
+import { MongoClient } from 'mongodb'
 
 @Injectable({
-  scope: ProviderScope.Session,
+  scope: ProviderScope.Session
 })
 export class DatabaseProvider implements OnRequest, OnResponse {
-  private _poolClient: MongoClient;
+  private _poolClient: MongoClient
   constructor(private pool: Pool) {}
   public async onRequest() {
-    this._poolClient = await pool.acquire();
+    this._poolClient = await pool.acquire()
   }
   public async onResponse() {
     if (this._poolClient) {
-      await this.pool.release(this._poolClient);
+      await this.pool.release(this._poolClient)
     }
   }
   public getClient() {
-    return this._poolClient;
+    return this._poolClient
   }
 }
 ```

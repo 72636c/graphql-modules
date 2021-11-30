@@ -12,9 +12,9 @@ The context is available as the 3rd argument to each resolver:
 ```typescript
 const resolvers = {
   Query: {
-    myQuery: (root, args, context, info) => {},
-  },
-};
+    myQuery: (root, args, context, info) => {}
+  }
+}
 ```
 
 > You can read more about resolver in **[Apollo Server documentation](https://www.apollographql.com/docs/graphql-tools/resolvers#Resolver-function-signature)**.
@@ -26,14 +26,14 @@ GraphQL Modules also uses the context; it adds to the context a field called `in
 You can use the `injector` from any resolver like that:
 
 ```typescript
-import { ModuleContext } from '@graphql-modules/core';
+import { ModuleContext } from '@graphql-modules/core'
 
 export default {
   Query: {
     myQuery: (_, args, { injector }: ModuleContext) =>
-      injector.get(MyProvider).doSomething(),
-  },
-};
+      injector.get(MyProvider).doSomething()
+  }
+}
 ```
 
 ### Context Builders
@@ -45,12 +45,12 @@ Each module can have its own `context` function, which takes the network session
 To add a custom `context` to your `GraphQLModule`, do the following:
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
-import * as typeDefs from './schema.graphql';
-import resolvers from './resolvers';
+import { GraphQLModule } from '@graphql-modules/core'
+import * as typeDefs from './schema.graphql'
+import resolvers from './resolvers'
 
 export interface IMyModuleContext {
-  myField: string;
+  myField: string
 }
 
 export const MyModule = new GraphQLModule<{}, {}, IMyModuleContext>({
@@ -58,10 +58,10 @@ export const MyModule = new GraphQLModule<{}, {}, IMyModuleContext>({
   resolvers,
   context: (session, currentContext, moduleSessionInfo) => {
     return {
-      myField: 'some-value',
-    };
-  },
-});
+      myField: 'some-value'
+    }
+  }
+})
 ```
 
 > Your custom context-building function should return either `object` or `Promise<object>`.
@@ -69,33 +69,33 @@ export const MyModule = new GraphQLModule<{}, {}, IMyModuleContext>({
 Then, in any of your resolvers, you can access it this way:
 
 ```typescript
-import { ModuleContext } from '@graphql-modules/core';
-import { IMyModuleContext } from './my-module';
+import { ModuleContext } from '@graphql-modules/core'
+import { IMyModuleContext } from './my-module'
 
 export default {
   Query: {
     myQuery: (_, args, { myField }: ModuleContext<IMyModuleContext>) =>
-      injector.get(MyProvider).doSomething(myField),
-  },
-};
+      injector.get(MyProvider).doSomething(myField)
+  }
+}
 ```
 
 You can also use this feature to implement authentication easily; you just access the network session, write async code, and return the current user, which is added to the `context`. For example:
 
 ```typescript
-import { GraphQLModule, Injector } from '@graphql-modules/core';
-import * as typeDefs from './schema.graphql';
-import resolvers from './resolvers';
-import { AuthenticationProvider } from './auth-provider';
+import { GraphQLModule, Injector } from '@graphql-modules/core'
+import * as typeDefs from './schema.graphql'
+import resolvers from './resolvers'
+import { AuthenticationProvider } from './auth-provider'
 
 export interface User {
-  firstName: string;
-  lastName: string;
+  firstName: string
+  lastName: string
 }
 
 export interface ISession {
-  req: express.Request;
-  res: express.Response;
+  req: express.Request
+  res: express.Response
 }
 
 export const AuthModule = new GraphQLModule({
@@ -103,15 +103,15 @@ export const AuthModule = new GraphQLModule({
   resolvers,
   providers: [AuthenticationProvider],
   async context(session: ISession, currentContext, { injector }) {
-    const authToken = session.req.headers.authentication;
+    const authToken = session.req.headers.authentication
     const currentUser = injector
       .get(AuthenticationProvider)
-      .authorizeUser(authToken);
+      .authorizeUser(authToken)
     return {
-      currentUser,
-    };
-  },
-});
+      currentUser
+    }
+  }
+})
 ```
 
 See also the article **[Authentication and Authorization in GraphQL (and how GraphQL-Modules can help)](https://medium.com/the-guild/authentication-and-authorization-in-graphql-and-how-graphql-modules-can-help-fadc1ee5b0c2)**.

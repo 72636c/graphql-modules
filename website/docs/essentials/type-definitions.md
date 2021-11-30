@@ -11,7 +11,7 @@ Just like GraphQL Schema, GraphQL Modules follow the same rules of writing SDL (
 To get started with type definitions in your module, make sure to use `gql` (you can import it from `graphql-modules`) or `parse` (from `graphql`) to convert your string SDL definition into a `DocumentNode` object.
 
 ```typescript
-import { createModule, gql } from 'graphql-modules';
+import { createModule, gql } from 'graphql-modules'
 
 export const myModule = createModule({
   id: 'my-module',
@@ -25,11 +25,11 @@ export const myModule = createModule({
       id: ID!
       username: String!
     }
-  `,
-});
+  `
+})
 ```
 
-> Using `string`s could be possible but we decided to force a better pattern. Using `gql` tag means your IDE can highlight the GraphQL SDL and in general works better with other tools from the GraphQL ecosystem.
+> Using `string`s could be possible, but we decided to force a better pattern. Using `gql` tag means your IDE can highlight the GraphQL SDL and in general works better with other tools from the GraphQL ecosystem.
 
 > TIP: `typeDefs` can be single item, or an array of multiple.
 
@@ -44,14 +44,14 @@ Start by installing it, and follow the installation instructions, based on your 
 Now, store your SDL in a `.graphql` file(s), and load it this way, with `import` or `require`:
 
 ```ts
-import MyQueryType from './query.type.graphql';
-import { createModule } from 'graphql-modules';
+import MyQueryType from './query.type.graphql'
+import { createModule } from 'graphql-modules'
 
 export const myModule = createModule({
   id: 'my-module',
   dirname: __dirname,
-  typeDefs: [MyQueryType],
-});
+  typeDefs: [MyQueryType]
+})
 ```
 
 ## Dynamically Load SDL files
@@ -65,15 +65,15 @@ Start by installing this package:
 Next, use it to load your files dynamically:
 
 ```ts
-import MyQueryType from './query.type.graphql';
-import { createModule } from 'graphql-modules';
-import { loadFilesSync } from '@graphql-tools/load-files';
+import MyQueryType from './query.type.graphql'
+import { createModule } from 'graphql-modules'
+import { loadFilesSync } from '@graphql-tools/load-files'
 
 export const myModule = createModule({
   id: 'my-module',
   dirname: __dirname,
-  typeDefs: loadFilesSync(join(__dirname, './typeDefs/*.graphql')),
-});
+  typeDefs: loadFilesSync(join(__dirname, './typeDefs/*.graphql'))
+})
 ```
 
 > Note: the default implementation of `loadFilesSync` is using `fs` module. If you are using `graphql-import-node`, you can add a 2nd parameter with configuration: `{ useRequire: true }`.

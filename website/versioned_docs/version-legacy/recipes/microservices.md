@@ -40,12 +40,12 @@ export class MyPubSub {
 Make sure to use it in a `GraphQLModule` declaration:
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
+import { GraphQLModule } from '@graphql-modules/core'
 
 const CommunicationModule = new GraphQLModule({
-  provider: [MyPubSub],
+  provider: [MyPubSub]
   /* ... */
-});
+})
 ```
 
 Finally, import `CommunicationModule` to all other modules where you wish to use `PubSub`.
@@ -57,38 +57,38 @@ Another useful trick is to use external PubSub services such as **[Redis PubSub]
 You can easily create a `RedisPubSub` this way:
 
 ```typescript
-import * as redis from 'redis';
+import * as redis from 'redis'
 
 export class PubSub {
-  _client = null;
+  _client = null
 
   constructor() {
-    this._client = redis.createClient();
+    this._client = redis.createClient()
   }
 
   subscribe<T = any>(
     event: string,
     handler: (payload: T) => void
   ): { unsubscribe: () => void } {
-    this._client.subscribe(event);
+    this._client.subscribe(event)
 
     this._client.on('message', function (channel, message) {
       if (channel !== event) {
-        return;
+        return
       }
 
-      handler(JSON.parse(message));
-    });
+      handler(JSON.parse(message))
+    })
 
     return {
       unsubscribe: () => {
-        this._client.unsubscribe(event);
-      },
-    };
+        this._client.unsubscribe(event)
+      }
+    }
   }
 
   publish<T = any>(event: string, payload: T): void {
-    this._client.publish(event, JSON.stringify(payload));
+    this._client.publish(event, JSON.stringify(payload))
   }
 }
 ```

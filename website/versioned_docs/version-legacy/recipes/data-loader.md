@@ -39,29 +39,29 @@ export const UserModule = new GraphQLModule({
 ### With Dependency Injection
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
-import { InjectFunction } from '@graphql-modules/di';
-import { MyExternalDataProvider } from './my-external-data-provider';
+import { GraphQLModule } from '@graphql-modules/core'
+import { InjectFunction } from '@graphql-modules/di'
+import { MyExternalDataProvider } from './my-external-data-provider'
 
-export const USER_DATA_LOADER = Symbol('USER_DATA_LOADER');
+export const USER_DATA_LOADER = Symbol('USER_DATA_LOADER')
 export const UserModule = new GraphQLModule({
   providers: [
     {
       provide: USER_DATA_LOADER,
       scope: ProviderScope.Session,
       useFactory: InjectFunction(MyExternalDataProvider)(
-        (myExternalDataProvider) =>
-          new DataLoader((keys) => myExternalDataProvider.getData(keys))
-      ),
-    },
+        myExternalDataProvider =>
+          new DataLoader(keys => myExternalDataProvider.getData(keys))
+      )
+    }
   ],
   resolvers: {
     Query: {
       getUserById: (root, args, { injector }) =>
-        injector.get(USER_DATA_LOADER).load(args.id),
-    },
-  },
-});
+        injector.get(USER_DATA_LOADER).load(args.id)
+    }
+  }
+})
 ```
 
 ### With Authentication Token
@@ -98,20 +98,20 @@ export const UserModule = new GraphQLModule({
 ## In Providers with Dependency Injection
 
 ```typescript
-import { Injectable, ProviderScope } from '@graphql-modules/di';
-import DataLoader from 'dataloader';
-import { MyExternalDataProvider } from './my-external-data-provider';
+import { Injectable, ProviderScope } from '@graphql-modules/di'
+import DataLoader from 'dataloader'
+import { MyExternalDataProvider } from './my-external-data-provider'
 
 @Injectable({
-  scope: ProviderScope.Session,
+  scope: ProviderScope.Session
 })
 export class UserProvider {
-  private dataLoader = new DataLoader((keys) =>
+  private dataLoader = new DataLoader(keys =>
     this.myDataProvider.findUsers(keys)
-  );
+  )
   constructor(private myDataProvider: MyExternalDataProvider) {}
   getUserById(userId: string) {
-    return this.dataLoader.load(userId);
+    return this.dataLoader.load(userId)
   }
 }
 ```

@@ -21,18 +21,18 @@ Let's assume we have a `Chat` type for base fields shared with the entity.
 `chat.type.ts`
 
 ```typescript
-import { ObjectType, Field, ID } from 'type-graphql';
+import { ObjectType, Field, ID } from 'type-graphql'
 
 @ObjectType()
 export class Chat {
-  @Field((type) => ID)
-  id: number;
+  @Field(type => ID)
+  id: number
 
   @Field()
-  title: string;
+  title: string
 
   @Field({ nullable: true })
-  description?: string;
+  description?: string
 }
 ```
 
@@ -41,25 +41,25 @@ Create another class for our queries and mutations based on this type:
 `chat.resolver.ts`
 
 ```typescript
-import { ChatsProvider } from './chats.provider';
-import { Resolver, Mutation, Arg, Int, Query } from 'type-graphql';
-import { Chat } from './chat.type';
+import { ChatsProvider } from './chats.provider'
+import { Resolver, Mutation, Arg, Int, Query } from 'type-graphql'
+import { Chat } from './chat.type'
 
-@Resolver((of) => Chat)
+@Resolver(of => Chat)
 export class ChatResolver {
   constructor(private chatsProvider: ChatsProvider) {}
 
-  @Query((returns) => [Chat])
+  @Query(returns => [Chat])
   chats() {
-    return this.chatsProvider.getChats();
+    return this.chatsProvider.getChats()
   }
 
-  @Query((returns) => Chat)
+  @Query(returns => Chat)
   chat(@Arg('id') id: number) {
-    return this.chatsProvider.getChat(id);
+    return this.chatsProvider.getChat(id)
   }
 
-  @Mutation((returns) => Chat)
+  @Mutation(returns => Chat)
   createChat(
     @Arg('title') title: string,
     @Arg('description') description: string
@@ -67,13 +67,13 @@ export class ChatResolver {
     return this.chatsProvider.createChat({
       id: Math.random(),
       title,
-      description,
-    });
+      description
+    })
   }
 
-  @Mutation((returns) => Int)
+  @Mutation(returns => Int)
   deleteChat(@Arg('id') id: number) {
-    return this.chatsProvider.deleteChat(id);
+    return this.chatsProvider.deleteChat(id)
   }
 }
 ```
@@ -85,13 +85,13 @@ Then let's create our module:
 `chat.module.ts`
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
-import { ChatsProvider } from './chats.provider';
-import { buildSchemaSync } from 'type-graphql';
-import { ChatResolver } from './chat.resolver';
-import { Chat } from './chat.type';
+import { GraphQLModule } from '@graphql-modules/core'
+import { ChatsProvider } from './chats.provider'
+import { buildSchemaSync } from 'type-graphql'
+import { ChatResolver } from './chat.resolver'
+import { Chat } from './chat.type'
 
-const resolvers = [ChatResolver];
+const resolvers = [ChatResolver]
 
 export const ChatsModule = new GraphQLModule({
   providers: [ChatsProvider, ...resolvers],
@@ -99,10 +99,10 @@ export const ChatsModule = new GraphQLModule({
     buildSchemaSync({
       resolvers,
       container: ({ context }) =>
-        ChatsModule.injector.getSessionInjector(context),
-    }),
-  ],
-});
+        ChatsModule.injector.getSessionInjector(context)
+    })
+  ]
+})
 ```
 
 We have to define resolver classes as providers because they are also part of our dependency injection.
@@ -121,7 +121,7 @@ new GraphQLModule({
   imports: [
     XModuleCreatedUsingSchemaFirst,
     YModuleCreatedUsingNexus,
-    ZModuleCreatedUsingTypeGraphQL,
-  ],
-});
+    ZModuleCreatedUsingTypeGraphQL
+  ]
+})
 ```

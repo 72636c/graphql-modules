@@ -3,8 +3,8 @@ id: providers
 title: Providers and Tokens
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
 The building blocks of DI are **Provider**(s) and **InjectionToken**(s).
 
@@ -28,21 +28,21 @@ Using a `class` provider in GraphQL Modules is the easiest approach to DI. The c
 Every Service should be decorated with `@Injectable` as follows:
 
 ```typescript title="data.ts"
-import { Injectable } from 'graphql-modules';
+import { Injectable } from 'graphql-modules'
 
 @Injectable()
 export class Data {}
 ```
 
 ```typescript title="module.ts"
-import { createModule } from 'graphql-modules';
-import { Data } from './data';
+import { createModule } from 'graphql-modules'
+import { Data } from './data'
 
 export const myModule = createModule({
   id: 'my-module',
   /* ... */
-  providers: [Data],
-});
+  providers: [Data]
+})
 ```
 
 It's a shorthand expression for:
@@ -66,8 +66,8 @@ values={[
 <TabItem value="example">
 
 ```typescript title="module.ts"
-import { createModule } from 'graphql-modules';
-import { Data } from './data';
+import { createModule } from 'graphql-modules'
+import { Data } from './data'
 
 export const myModule = createModule({
   id: 'my-module',
@@ -75,10 +75,10 @@ export const myModule = createModule({
   providers: [
     {
       provide: Data,
-      useClass: Data,
-    },
-  ],
-});
+      useClass: Data
+    }
+  ]
+})
 ```
 
 </TabItem>
@@ -107,14 +107,14 @@ values={[
 <TabItem value="example">
 
 ```typescript title="keys.ts"
-import { InjectionToken } from 'graphql-modules';
+import { InjectionToken } from 'graphql-modules'
 
-export const ApiKey = new InjectionToken<string>('api-key');
+export const ApiKey = new InjectionToken<string>('api-key')
 ```
 
 ```typescript title="module.ts"
-import { createModule } from 'graphql-modules';
-import { ApiKey } from './keys';
+import { createModule } from 'graphql-modules'
+import { ApiKey } from './keys'
 
 export const myModule = createModule({
   id: 'my-module',
@@ -122,10 +122,10 @@ export const myModule = createModule({
   providers: [
     {
       provide: ApiKey,
-      useValue: 'my-api-key',
-    },
-  ],
-});
+      useValue: 'my-api-key'
+    }
+  ]
+})
 ```
 
 </TabItem>
@@ -161,14 +161,14 @@ values={[
 <TabItem value="example">
 
 ```typescript title="keys.ts"
-import { InjectionToken } from 'graphql-modules';
+import { InjectionToken } from 'graphql-modules'
 
-export const ApiKey = new InjectionToken<string>('api-key');
+export const ApiKey = new InjectionToken<string>('api-key')
 ```
 
 ```typescript title="module.ts"
-import { createModule } from 'graphql-modules';
-import { ApiKey } from './keys';
+import { createModule } from 'graphql-modules'
+import { ApiKey } from './keys'
 
 export const myModule = createModule({
   id: 'my-module',
@@ -178,15 +178,15 @@ export const myModule = createModule({
       provide: ApiKey,
       useFactory(config: Config) {
         if (context.environment) {
-          return 'my-api-key';
+          return 'my-api-key'
         }
 
-        return null;
+        return null
       },
-      deps: [Config],
-    },
-  ],
-});
+      deps: [Config]
+    }
+  ]
+})
 ```
 
 </TabItem>
@@ -209,17 +209,17 @@ values={[
 <TabItem value="resolver">
 
 ```typescript
-import { Auth } from './auth';
+import { Auth } from './auth'
 
 const resolvers = {
   Query: {
     me(parent, args, context, info) {
-      const auth = context.injector.get(Auth);
+      const auth = context.injector.get(Auth)
 
-      return auth.getCurrentUser();
-    },
-  },
-};
+      return auth.getCurrentUser()
+    }
+  }
+}
 ```
 
 > `Injector` is available in GraphQL Context under `injector` property.
@@ -228,8 +228,8 @@ const resolvers = {
 <TabItem value="service">
 
 ```typescript
-import { Injectable } from 'graphql-modules';
-import { Auth } from './auth';
+import { Injectable } from 'graphql-modules'
+import { Auth } from './auth'
 
 @Injectable()
 class Posts {
@@ -237,12 +237,12 @@ class Posts {
 
   allPosts() {
     if (!this.auth.isLoggedIn()) {
-      throw new Error('Auth required');
+      throw new Error('Auth required')
     }
 
     return [
       /* ... */
-    ];
+    ]
   }
 }
 ```
@@ -263,21 +263,21 @@ values={[
 <TabItem value="resolver">
 
 ```typescript
-import { ApiKey } from './keys';
+import { ApiKey } from './keys'
 
 const resolvers = {
   Query: {
     me(parent, args, context, info) {
-      const apiKey = context.injector.get(ApiKey);
+      const apiKey = context.injector.get(ApiKey)
 
       if (!this.key) {
-        throw new Error('API key is required');
+        throw new Error('API key is required')
       }
 
-      return auth.getCurrentUser();
-    },
-  },
-};
+      return auth.getCurrentUser()
+    }
+  }
+}
 ```
 
 > `Injector` is available in GraphQL Context under `injector` property.
@@ -286,8 +286,8 @@ const resolvers = {
 <TabItem value="service">
 
 ```typescript
-import { Injectable, Inject } from 'graphql-modules';
-import { ApiKey } from './keys';
+import { Injectable, Inject } from 'graphql-modules'
+import { ApiKey } from './keys'
 
 @Injectable()
 class Posts {
@@ -295,12 +295,12 @@ class Posts {
 
   allPosts() {
     if (!this.key) {
-      throw new Error('API key is required');
+      throw new Error('API key is required')
     }
 
     return [
       /* ... */
-    ];
+    ]
   }
 }
 ```
@@ -326,14 +326,14 @@ values={[
 // Users module
 
 @Injectable({
-  global: true,
+  global: true
 })
 export class Auth {
   constructor(private logger: Logger) {}
 
   getCurrentUser() {
-    logger.debug(`Asking for authenticated user`);
-    return /*... */;
+    logger.debug(`Asking for authenticated user`)
+    return /*... */
   }
 }
 ```
@@ -349,11 +349,11 @@ export class Posts {
   constructor(private auth: Auth, private logger: Logger) {}
 
   getMyPosts() {
-    const me = this.auth.getCurrentUser();
+    const me = this.auth.getCurrentUser()
 
-    logger.debug(`Asking for my posts`);
+    logger.debug(`Asking for my posts`)
 
-    return /* ... */;
+    return /* ... */
   }
 }
 ```
@@ -378,8 +378,8 @@ Global providers are still isolated but their API is public to other modules.
 The `forwardRef` function allows to refer to references which are not yet defined. Useful when circular dependency of modules is an issue.
 
 ```typescript
-import { Injectable, Inject } from 'graphql-modules';
-import { ApiKey } from './keys';
+import { Injectable, Inject } from 'graphql-modules'
+import { ApiKey } from './keys'
 
 @Injectable()
 class Posts {
@@ -387,12 +387,12 @@ class Posts {
 
   allPosts() {
     if (!this.key) {
-      throw new Error('API key is required');
+      throw new Error('API key is required')
     }
 
     return [
       /* ... */
-    ];
+    ]
   }
 }
 ```

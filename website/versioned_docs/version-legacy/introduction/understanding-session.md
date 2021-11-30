@@ -20,18 +20,18 @@ For example, `express-graphql` passes `express.Request` by default as the global
 const MyModule = new GraphQLModule({
   context(session: express.Request) {
     return {
-      authToken: session.headers.authorization,
-    };
-  },
-});
+      authToken: session.headers.authorization
+    }
+  }
+})
 
 // Some `express` code
 app.use(
   '/graphql',
   graphqlHTTP({
-    schema: MyModule.schema,
+    schema: MyModule.schema
   })
-);
+)
 ```
 
 If we need more stuff in the network session:
@@ -71,10 +71,10 @@ new ApolloServer({
   // or
   context: ({ req, res }) => ({ session: { req, res } }),
   // or
-  context: (session) => ({ session }),
+  context: session => ({ session }),
   // or
-  context: (session) => session,
-});
+  context: session => session
+})
 ```
 
 ### Using in another application that doesn't use GraphQL Modules on the top

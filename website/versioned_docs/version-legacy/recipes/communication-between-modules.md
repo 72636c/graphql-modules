@@ -13,8 +13,8 @@ GraphQL Modules provides multiple ways of doing it, and you should pick the righ
 If your modules are coupled, you can use direct dependency injection.
 
 ```typescript
-import { Injectable } from '@graphql-modules/di';
-import { OtherProvider } from '../my-other-module/other.provider';
+import { Injectable } from '@graphql-modules/di'
+import { OtherProvider } from '../my-other-module/other.provider'
 
 @Injectable()
 export class MyProvider {
@@ -27,10 +27,10 @@ export class MyProvider {
 If you wish to make a module communicate with other modules without direct imports, you can use injection tokens:
 
 ```typescript
-import { Inject, Injectable } from '@graphql-modules/di';
+import { Inject, Injectable } from '@graphql-modules/di'
 
 export interface IOtherProviderSignature {
-  doSomething: () => void;
+  doSomething: () => void
 }
 
 @Injectable()
@@ -85,42 +85,42 @@ const CommonModule = new GraphQLModule({
 And import this common module when you want to use `PubSub`.
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
+import { GraphQLModule } from '@graphql-modules/core'
 
 export const FooModule = new GraphQLModule({
-  imports: [CommonModule],
-});
+  imports: [CommonModule]
+})
 ```
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
+import { GraphQLModule } from '@graphql-modules/core'
 
 export const BarModule = new GraphQLModule({
   imports: [CommonModule],
-  providers: [MyProvider],
-});
+  providers: [MyProvider]
+})
 ```
 
 To use `PubSub`, you can do the following:
 
 ```typescript
-import { Injectable } from '@graphql-modules/di';
-import { PubSub } from 'graphql-subscriptions';
+import { Injectable } from '@graphql-modules/di'
+import { PubSub } from 'graphql-subscriptions'
 
 @Injectable()
 export class MyProvider {
   constructor(private pubsub: PubSub) {
     // Listen to messages and handle them
-    pubsub.subscribe('NOTIFY_USER', (payload) => {
+    pubsub.subscribe('NOTIFY_USER', payload => {
       // Do something
-    });
+    })
   }
 
   doSomething() {
     // Publish messages
     pubsub.publish('DO_SOMETHING_ELSE', {
-      foo: 'bar',
-    });
+      foo: 'bar'
+    })
   }
 }
 ```

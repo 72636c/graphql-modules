@@ -35,15 +35,15 @@ export default {
     user: (root, { id }) => {
       return {
         _id: id,
-        username: 'jhon',
-      };
-    },
+        username: 'jhon'
+      }
+    }
   },
   User: {
-    id: (user) => user._id,
-    username: (user) => user.username,
-  },
-};
+    id: user => user._id,
+    username: user => user.username
+  }
+}
 ```
 
 Now, update your `GraphQLModule` declaration to load the resolvers:
@@ -51,14 +51,14 @@ Now, update your `GraphQLModule` declaration to load the resolvers:
 `modules/my-module/index.ts`
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
-import * as typeDefs from './schema.graphql';
-import resolvers from './resolvers';
+import { GraphQLModule } from '@graphql-modules/core'
+import * as typeDefs from './schema.graphql'
+import resolvers from './resolvers'
 
 export const MyModule = new GraphQLModule({
   typeDefs,
-  resolvers,
-});
+  resolvers
+})
 ```
 
 > We can import from `schema.graphql` because we are doing some bundling tricks. If you need help with it, refer to the **[Development Environment](../recipes/development-environment.md)** section.

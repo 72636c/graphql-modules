@@ -15,11 +15,11 @@ GraphQL Modules lets you choose whether to use dependency injection or not.
 GraphQL Modules depend on **Reflect API** and specifically **design:paramtypes** for reflection and for defining dependencies between DI parts, please install and import `reflect-metadata` before every other module.
 
 ```typescript
-import 'reflect-metadata';
+import 'reflect-metadata'
 /* code */
-
-If you are using Babel, please be aware that the preset **@babel/preset-typescript** strips out all the metadata and breaks DI. To overcome this, please use the following plugin: https://www.npmjs.com/package/babel-plugin-transform-typescript-metadata  
 ```
+
+If you are using Babel, please be aware that the preset **@babel/preset-typescript** strips out all the metadata and breaks DI. To overcome this, please use the following plugin: <https://npmjs.com/package/babel-plugin-transform-typescript-metadata>
 
 ## Introduction
 

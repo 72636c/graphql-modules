@@ -18,23 +18,23 @@ Let's assume we have something like the following at the beginning.
 As you can seem we add the `graphqlUploadExpress` middleware into `/graphql` route to handle file uploads and pass data through the resolvers.
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
-import * as express from 'express';
-import * as graphqlHTTP from 'express-graphql';
+import { GraphQLModule } from '@graphql-modules/core'
+import * as express from 'express'
+import * as graphqlHTTP from 'express-graphql'
 
 const { schema } = new GraphQLModule({
   /*...*/
-});
+})
 
-const app = express();
+const app = express()
 
 app.use(
   '/graphql',
   graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }),
   graphqlHTTP({ schema, graphiql: true })
-);
+)
 
-app.listen(4000);
+app.listen(4000)
 ```
 
 ### Enabling uploads in Apollo-Server
@@ -43,25 +43,25 @@ If you are using apollo-server, you don't have to add the express middleware.
 You just need to add the `uploads` field to your Apollo Server configuration:
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
-import { ApolloServer } from 'apollo-server';
+import { GraphQLModule } from '@graphql-modules/core'
+import { ApolloServer } from 'apollo-server'
 
 const AppModule = new GraphQLModule({
   /*...*/
-});
+})
 
 const server = new ApolloServer({
   modules: [AppModule],
-  context: (session) => session,
+  context: session => session,
   uploads: {
     maxFileSize: 10000000, // 10 MB
-    maxFiles: 20,
-  },
-});
+    maxFiles: 20
+  }
+})
 
 server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
+  console.log(`🚀  Server ready at ${url}`)
+})
 ```
 
 > You can read more about upload options in **[graphql-upload](https://github.com/jaydenseric/graphql-upload#type-uploadoptions)** docs.
@@ -75,18 +75,18 @@ In the example, we create a new module called `UploadModule` and put everything 
 `upload.module.ts`
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
-import gql from 'graphql-tag';
-import { GraphQLUpload } from 'graphql-upload';
+import { GraphQLModule } from '@graphql-modules/core'
+import gql from 'graphql-tag'
+import { GraphQLUpload } from 'graphql-upload'
 
 export const UploadModule = new GraphQLModule({
   typeDefs: gql`
     scalar Upload
   `,
   resolvers: {
-    Upload: GraphQLUpload,
-  },
-});
+    Upload: GraphQLUpload
+  }
+})
 ```
 
 ## Using it on other modules
@@ -94,14 +94,14 @@ export const UploadModule = new GraphQLModule({
 Let's assume we have `ImageModule` and we want to add a mutation to it for uploading an image to our server:
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
-import gql from 'graphql-tag';
-import { UploadModule } from '../upload.module';
+import { GraphQLModule } from '@graphql-modules/core'
+import gql from 'graphql-tag'
+import { UploadModule } from '../upload.module'
 
 export const ImageModule = new GraphQLModule({
   imports: [
     // We should import UploadModule for file-upload-related schema elements
-    UploadModule,
+    UploadModule
     // some other imports
   ],
   typeDefs: gql`
@@ -117,12 +117,12 @@ export const ImageModule = new GraphQLModule({
   resolvers: {
     Mutation: {
       uploadImage: async (root, { name, file }) => {
-        const { filename, mimetype, createReadStream } = await file;
-        const stream = createReadStream();
+        const { filename, mimetype, createReadStream } = await file
+        const stream = createReadStream()
         // Promisify the stream and store the file, then ...
-        return true;
-      },
-    },
-  },
-});
+        return true
+      }
+    }
+  }
+})
 ```

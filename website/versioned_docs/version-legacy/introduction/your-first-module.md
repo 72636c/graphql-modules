@@ -13,8 +13,8 @@ Here is a quick example:
 `modules/my-first-module/index.ts`
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
-import gql from 'graphql-tag';
+import { GraphQLModule } from '@graphql-modules/core'
+import gql from 'graphql-tag'
 
 export const MyFirstModule = new GraphQLModule({
   typeDefs: gql`
@@ -25,8 +25,8 @@ export const MyFirstModule = new GraphQLModule({
     type Data {
       field: String
     }
-  `,
-});
+  `
+})
 ```
 
 That's it. You now have a ready-to-use `GraphQLModule`. Our next step is to expose it using `ApolloServer`.

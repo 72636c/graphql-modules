@@ -14,20 +14,20 @@ Thanks to `@ExecutionContext` decorator, every `Singleton` provider gets access 
 Take a look at the example below.
 
 ```typescript
-import { Injectable, ExecutionContext } from 'graphql-modules';
-import { Config } from './config';
+import { Injectable, ExecutionContext } from 'graphql-modules'
+import { Config } from './config'
 
 @Injectable()
 export class Data {
   constructor(private config: Config) {}
 
   @ExecutionContext()
-  private context: ExecutionContext;
+  private context: ExecutionContext
 
   someMethod() {
-    console.log('Environment', this.config.env);
+    console.log('Environment', this.config.env)
 
-    const value = this.context.injector.get(SOME_TOKEN);
+    const value = this.context.injector.get(SOME_TOKEN)
   }
 }
 ```

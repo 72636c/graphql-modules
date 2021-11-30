@@ -3,8 +3,8 @@ id: migration
 title: Migration from v0.X
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
 > Note: this page is still in progress!
 
@@ -24,7 +24,7 @@ values={[
 <TabItem value="1">
 
 ```typescript
-import { gql, createModule, Injectable } from 'graphql-modules';
+import { gql, createModule, Injectable } from 'graphql-modules'
 ```
 
 </TabItem>
@@ -52,7 +52,7 @@ values={[
 <TabItem value="1">
 
 ```typescript
-import { gql, createModule } from 'graphql-modules';
+import { gql, createModule } from 'graphql-modules'
 
 const myModule = createModule({
   /// ...
@@ -60,8 +60,8 @@ const myModule = createModule({
     type Query {
       foo: String
     }
-  `,
-});
+  `
+})
 ```
 
 </TabItem>
@@ -70,8 +70,8 @@ const myModule = createModule({
 ```typescript
 const myModule = GraphQLModule({
   // ...
-  typeDefs: `type Query { foo: String }`,
-});
+  typeDefs: `type Query { foo: String }`
+})
 ```
 
 </TabItem>
@@ -123,7 +123,7 @@ To define:
 function yourMiddleware({ root, args, context, info }, next) {
   /* code */
 
-  return next();
+  return next()
 }
 ```
 
@@ -134,10 +134,10 @@ const myModule = createModule({
   // ...
   middlwares: {
     Query: {
-      me: [yourMiddleware],
-    },
-  },
-});
+      me: [yourMiddleware]
+    }
+  }
+})
 ```
 
 </TabItem>
@@ -146,16 +146,12 @@ const myModule = createModule({
 To define:
 
 ```typescript
-export const yourMiddleware = () => (next) => async (
-  root,
-  args,
-  context,
-  info
-) => {
-  /* code */
+export const yourMiddleware =
+  () => next => async (root, args, context, info) => {
+    /* code */
 
-  return next(root, args, context, info);
-};
+    return next(root, args, context, info)
+  }
 ```
 
 To use:
@@ -164,9 +160,9 @@ To use:
 const myModule = new GraphQLModule({
   /*...*/
   resolversComposition: {
-    'Query.me': [yourMiddleware],
-  },
-});
+    'Query.me': [yourMiddleware]
+  }
+})
 ```
 
 </TabItem>
@@ -261,19 +257,19 @@ class MyProvider {
 }
 
 const moduleOne = new GraphQLModule({
-  providers: [MyProvider],
-});
+  providers: [MyProvider]
+})
 
 // Module 2
 @Injectable()
 class MyOtherProvider {
   constructor(myProvider: MyProvider) {}
 }
-const moduleTwo = new GraphQLModule({ imports: [moduleOne] });
+const moduleTwo = new GraphQLModule({ imports: [moduleOne] })
 
 const rootModule = new GraphQLModule({
-  imports: [moduleTwo],
-});
+  imports: [moduleTwo]
+})
 ```
 
 </TabItem>
@@ -294,15 +290,15 @@ values={[
 <TabItem value="1">
 
 ```typescript
-import { createModule, InjectionToken } from '@graphql-modules/core';
+import { createModule, InjectionToken } from '@graphql-modules/core'
 
 export interface MyModuleConfig {
-  secretKey: string;
-  remoteEndpoint: string;
-  someDbInstance: SomeDBInstance;
+  secretKey: string
+  remoteEndpoint: string
+  someDbInstance: SomeDBInstance
 }
 
-export const MyConfig = new InjectionToken<MyModuleConfig>();
+export const MyConfig = new InjectionToken<MyModuleConfig>()
 
 export const createMyModule = (config: MyModuleConfig) =>
   createModule({
@@ -310,20 +306,20 @@ export const createMyModule = (config: MyModuleConfig) =>
     providers: [
       {
         provide: MyConfig,
-        useValue: config,
-      },
-    ],
-  });
+        useValue: config
+      }
+    ]
+  })
 
 const application = createApplication({
   modules: [
     createMyModule({
       secretKey: '123',
       remoteEndpoint: 'http://...',
-      someDbInstance: db,
-    }),
-  ],
-});
+      someDbInstance: db
+    })
+  ]
+})
 ```
 
 And to consume, that same way as in V0:
@@ -341,12 +337,12 @@ export class MyProvider {
 <TabItem value="0">
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
+import { GraphQLModule } from '@graphql-modules/core'
 
 export interface MyModuleConfig {
-  secretKey: string;
-  remoteEndpoint: string;
-  someDbInstance: SomeDBInstance;
+  secretKey: string
+  remoteEndpoint: string
+  someDbInstance: SomeDBInstance
 }
 
 // You can access the config object like below inside the module declaration
@@ -355,10 +351,10 @@ export const MyModule = new GraphQLModule<MyModuleConfig>({
     MyProvider,
     {
       provide: SomeDbInstance,
-      useValue: someDbInstance,
-    },
-  ],
-});
+      useValue: someDbInstance
+    }
+  ]
+})
 ```
 
 And to consume:
@@ -405,12 +401,12 @@ const MyModule = new GraphQLModule({
   context(session: MyModuleSession) {
     session.res.on('finish', () => {
       // Some cleanup
-    });
+    })
     return {
-      authToken: session.req.headers.authorization,
-    };
-  },
-});
+      authToken: session.req.headers.authorization
+    }
+  }
+})
 ```
 
 </TabItem>
@@ -418,12 +414,12 @@ const MyModule = new GraphQLModule({
 
 ## Dependency Injection Scopes
 
-We decided to reduce the number of Scopes (from 3 to only 2) and change the names. The `Session` and `Request` scopes are a bit misleading and hard to understand at first glimpse. 
+We decided to reduce the number of Scopes (from 3 to only 2) and change the names. The `Session` and `Request` scopes are a bit misleading and hard to understand at first glimpse.
 
 In v1 it's much simpler, there are two Scopes:
 
-  - `Singleton` - Injectable is instantiated once, at bootstrap phase (`createApplication`)
-  - `Operation` - Injectable is instantiated once per GraphQL Operation.
+- `Singleton` - Injectable is instantiated once, at bootstrap phase (`createApplication`)
+- `Operation` - Injectable is instantiated once per GraphQL Operation.
 
 In our opinion, it's much easier to reason about.
 
@@ -432,7 +428,7 @@ The `ProviderScope` was renamed to just `Scope`.
 ## Dependency Injection Hierarchy
 
 With v1, the structure of your application is now flat, meaning there's an application level on top of a module level (many).
-    
+
     Application -> [ Module, Module, Module ]
 
 This change enables an abstraction that was not possible in v0. Your modules can depend on Injectables or InjectionTokens provided by Application.

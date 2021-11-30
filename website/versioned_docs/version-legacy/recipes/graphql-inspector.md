@@ -24,10 +24,10 @@ GraphQL Modules won't load other things such as injectors, resolvers and provide
 `src/schema.ts`
 
 ```typescript
-import { AppModule } from './modules/app.module';
+import { AppModule } from './modules/app.module'
 
 // Get schema from top module, and export it
-export default AppModule.schema;
+export default AppModule.schema
 ```
 
 Then, you can run:

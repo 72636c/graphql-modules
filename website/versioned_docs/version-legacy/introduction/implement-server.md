@@ -13,25 +13,25 @@ yarn add express express-graphql
 Then,
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
-import * as express from 'express';
-import * as graphqlHTTP from 'express-graphql';
+import { GraphQLModule } from '@graphql-modules/core'
+import * as express from 'express'
+import * as graphqlHTTP from 'express-graphql'
 
 const { schema } = new GraphQLModule({
   /*...*/
-});
+})
 
-const app = express();
+const app = express()
 
 app.use(
   '/graphql',
   graphqlHTTP({
     schema,
-    graphiql: true,
+    graphiql: true
   })
-);
+)
 
-app.listen(4000);
+app.listen(4000)
 ```
 
 > To test your server, run `ts-node index.ts` and try to open `http://localhost:4000/`. See the **[GraphiQL](https://github.com/graphql/graphiql)** UI.

@@ -9,13 +9,13 @@ Each module can have its own configuration, and you can specify it in your `Grap
 Start by creating a TypeScript interface that specifies the structure of your configuration object, and pass it as the first generic argument to your `GraphQLModule`:
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
-import { MyProvider } from './my-provider.ts';
+import { GraphQLModule } from '@graphql-modules/core'
+import { MyProvider } from './my-provider.ts'
 
 export interface MyModuleConfig {
-  secretKey: string;
-  remoteEndpoint: string;
-  someDbInstance: SomeDBInstance;
+  secretKey: string
+  remoteEndpoint: string
+  someDbInstance: SomeDBInstance
 }
 
 // You can access the config object like below inside the module declaration
@@ -24,26 +24,26 @@ export const MyModule = new GraphQLModule<MyModuleConfig>({
     MyProvider,
     {
       provide: SomeDbInstance,
-      useValue: someDbInstance,
-    },
-  ],
-});
+      useValue: someDbInstance
+    }
+  ]
+})
 ```
 
 To provide the configuration values, add `.forRoot` to your module when you load it:
 
 ```typescript
-import { GraphQLModule } from '@graphql-modules/core';
-import { MyModule } from './modules/my-module';
+import { GraphQLModule } from '@graphql-modules/core'
+import { MyModule } from './modules/my-module'
 
 const AnotherModule = new GraphQLModule({
   imports: [
     MyModule.forRoot({
       secretKey: '123',
-      remoteEndpoint: 'http://my-other-service.com',
-    }),
-  ],
-});
+      remoteEndpoint: 'http://my-other-service.com'
+    })
+  ]
+})
 ```
 
 To get access to your configuration in your `Provider`s, inject `MyModuleConfig`:

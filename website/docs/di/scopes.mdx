@@ -3,8 +3,8 @@ id: scopes
 title: Scopes
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
 Scope defines a life cycle of `Providers` and `InjectionToken`. There are two kinds of scopes, **Singleton** and **Operation**, former is used by default.
 
@@ -23,25 +23,25 @@ values={[
 <TabItem value="service">
 
 ```typescript
-import { Injectable, createModule } from 'graphql-modules';
+import { Injectable, createModule } from 'graphql-modules'
 
 @Injectable()
 class Data {}
 
 export const myModule = createModule({
   id: 'my-module',
-  providers: [Data],
+  providers: [Data]
   /* ... */
-});
+})
 ```
 
 </TabItem>
 <TabItem value="factory">
 
 ```typescript
-import { Injectable, InjectionToken, createModule } from 'graphql-modules';
+import { Injectable, InjectionToken, createModule } from 'graphql-modules'
 
-const Env = new InjectionToken<'production' | 'development'>('environment');
+const Env = new InjectionToken<'production' | 'development'>('environment')
 
 export const myModule = createModule({
   id: 'my-module',
@@ -51,12 +51,12 @@ export const myModule = createModule({
       useFactory() {
         return process.env.NODE_ENV === 'production'
           ? 'production'
-          : 'development';
-      },
-    },
-  ],
+          : 'development'
+      }
+    }
+  ]
   /* ... */
-});
+})
 ```
 
 </TabItem>
@@ -83,18 +83,18 @@ values={[
 <TabItem value="service">
 
 ```typescript
-import { Injectable, Scope, createModule } from 'graphql-modules';
+import { Injectable, Scope, createModule } from 'graphql-modules'
 
 @Injectable({
-  scope: Scope.Operation, // <- here
+  scope: Scope.Operation // <- here
 })
 class Data {}
 
 export const myModule = createModule({
   id: 'my-module',
-  providers: [Data],
+  providers: [Data]
   /* ... */
-});
+})
 ```
 
 </TabItem>
@@ -105,10 +105,10 @@ import {
   Injectable,
   Scope,
   InjectionToken,
-  createModule,
-} from 'graphql-modules';
+  createModule
+} from 'graphql-modules'
 
-const Env = new InjectionToken<'production' | 'development'>('environment');
+const Env = new InjectionToken<'production' | 'development'>('environment')
 
 export const myModule = createModule({
   id: 'my-module',
@@ -119,12 +119,12 @@ export const myModule = createModule({
       useFactory() {
         return process.env.NODE_ENV === 'production'
           ? 'production'
-          : 'development';
-      },
-    },
-  ],
+          : 'development'
+      }
+    }
+  ]
   /* ... */
-});
+})
 ```
 
 </TabItem>

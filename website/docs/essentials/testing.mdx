@@ -4,15 +4,15 @@ title: Testing
 sidebar_label: Testing
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
 GraphQL Modules provides a set of utilities for testing your modules and also for more granular testing of module's smaller units, like providers and middlewares.
 
 To access the testing utilities, import `testkit` object from `graphql-modules` package:
 
 ```typescript
-import { testkit } from 'graphql-modules';
+import { testkit } from 'graphql-modules'
 ```
 
 The `testkit` object and its API will grow over time, we expect to implement more and more useful features in upcoming releases.
@@ -32,10 +32,10 @@ The `testkit.mockApplication()` resolves a `MockedApplication` object that exten
 One of those methods is `replaceModule()`. In combination with `testkit.mockModule()`, it allows you to modify a module and overwrite its providers.
 
 ```typescript
-import 'reflect-metadata';
-import { testkit } from 'graphql-modules';
-import { application } from './application';
-import { myModule, ENVIRONMENT } from './my-module';
+import 'reflect-metadata'
+import { testkit } from 'graphql-modules'
+import { application } from './application'
+import { myModule, ENVIRONMENT } from './my-module'
 
 test('ing', () => {
   const app = testkit.mockApplication(application).replaceModule(
@@ -43,14 +43,14 @@ test('ing', () => {
       providers: [
         {
           provide: ENVIRONMENT,
-          useValue: 'testing',
-        },
-      ],
+          useValue: 'testing'
+        }
+      ]
     })
-  );
+  )
 
-  expect(app.schema.getQueryType()).toBeDefined();
-});
+  expect(app.schema.getQueryType()).toBeDefined()
+})
 ```
 
 In the example above we modified the original application by setting testing `ENVIRONMENT` in `myModule`. We used `testkit.mockApplication`, `replaceModule` and `testkit.mockModule` together.
@@ -63,20 +63,20 @@ Now let's talk about `addProviders()` function. It allows you to overwrite appli
 > With this on mind, it's easy to overwrite providers, just put it at the end of the list. This is exactly how `addProviders()` works.
 
 ```typescript
-import 'reflect-metadata';
-import { testkit } from 'graphql-modules';
-import { application, ENVIRONMENT } from './application';
+import 'reflect-metadata'
+import { testkit } from 'graphql-modules'
+import { application, ENVIRONMENT } from './application'
 
 test('ing', () => {
   const app = testkit.mockApplication(application).addProviders([
     {
       provide: ENVIRONMENT,
-      useValue: 'testing',
-    },
-  ]);
+      useValue: 'testing'
+    }
+  ])
 
-  expect(app.schema.getQueryType()).toBeDefined();
-});
+  expect(app.schema.getQueryType()).toBeDefined()
+})
 ```
 
 In the example above we modified the original application by setting the `ENVIRONMENT` to `testing`. We used `testkit.mockApplication` and `addProviders`.
@@ -88,15 +88,15 @@ In general, the idea behind testing a module is to create an application out of 
 The easiest way to test a module would be to write the following code:
 
 ```typescript
-import 'reflect-metadata';
-import { testkit } from 'graphql-modules';
-import { myModule } from './my-module';
+import 'reflect-metadata'
+import { testkit } from 'graphql-modules'
+import { myModule } from './my-module'
 
 test('ing', () => {
-  const app = testkit.testModule(myModule);
+  const app = testkit.testModule(myModule)
 
-  expect(app.schema.getQueryType()).toBeDefined();
-});
+  expect(app.schema.getQueryType()).toBeDefined()
+})
 ```
 
 Probaly none of your modules will work with `testkit.testModule` out of the box. That's because the module and especially its type definitions depend on types from another module or Dependency Injection is incomplete.
@@ -116,24 +116,24 @@ values={[
 <TabItem value="test">
 
 ```typescript
-import 'reflect-metadata';
-import { testkit } from 'graphql-modules';
-import { myModule } from './my-module';
+import 'reflect-metadata'
+import { testkit } from 'graphql-modules'
+import { myModule } from './my-module'
 
 test('ing', () => {
   const app = testkit.testModule(myModule, {
-    replaceExtensions: true,
-  });
+    replaceExtensions: true
+  })
 
-  expect(app.schema.getQueryType()).toBeDefined();
-});
+  expect(app.schema.getQueryType()).toBeDefined()
+})
 ```
 
 </TabItem>
 <TabItem value="module">
 
 ```typescript
-import { createModule, gql } from 'graphql-modules';
+import { createModule, gql } from 'graphql-modules'
 
 export const myModule = createModule({
   id: 'my-module',
@@ -145,8 +145,8 @@ export const myModule = createModule({
     type User {
       id: ID
     }
-  `,
-});
+  `
+})
 ```
 
 </TabItem>
@@ -167,9 +167,9 @@ values={[
 <TabItem value="test">
 
 ```typescript
-import 'reflect-metadata';
-import { testkit, gql } from 'graphql-modules';
-import { myModule } from './my-module';
+import 'reflect-metadata'
+import { testkit, gql } from 'graphql-modules'
+import { myModule } from './my-module'
 
 test('ing', () => {
   const app = testkit.testModule(myModule, {
@@ -182,23 +182,23 @@ test('ing', () => {
       Query: {
         me() {
           return {
-            name: 'Bob',
-          };
-        },
-      },
+            name: 'Bob'
+          }
+        }
+      }
     },
-    replaceExtensions: true,
-  });
+    replaceExtensions: true
+  })
 
-  expect(app.schema.getQueryType()).toBeDefined();
-});
+  expect(app.schema.getQueryType()).toBeDefined()
+})
 ```
 
 </TabItem>
 <TabItem value="module">
 
 ```typescript
-import { createModule, gql } from 'graphql-modules';
+import { createModule, gql } from 'graphql-modules'
 
 export const myModule = createModule({
   id: 'my-module',
@@ -206,8 +206,8 @@ export const myModule = createModule({
     extend type Query {
       me: User
     }
-  `,
-});
+  `
+})
 ```
 
 </TabItem>
@@ -229,25 +229,25 @@ values={[
 <TabItem value="test">
 
 ```typescript
-import 'reflect-metadata';
-import { testkit } from 'graphql-modules';
-import { myModule } from './my-module';
-import { otherModule } from './other-module';
+import 'reflect-metadata'
+import { testkit } from 'graphql-modules'
+import { myModule } from './my-module'
+import { otherModule } from './other-module'
 
 test('ing', () => {
   const app = testkit.testModule(myModule, {
-    inheritTypeDefs: [otherModule],
-  });
+    inheritTypeDefs: [otherModule]
+  })
 
-  expect(app.schema.getTypes().Message).not.toBeDefined();
-});
+  expect(app.schema.getTypes().Message).not.toBeDefined()
+})
 ```
 
 </TabItem>
 <TabItem value="module">
 
 ```typescript
-import { createModule, gql } from 'graphql-modules';
+import { createModule, gql } from 'graphql-modules'
 
 export const myModule = createModule({
   id: 'my-module',
@@ -255,15 +255,15 @@ export const myModule = createModule({
     type Query {
       me: User
     }
-  `,
-});
+  `
+})
 ```
 
 </TabItem>
 <TabItem value="other-module">
 
 ```typescript
-import { createModule, gql } from 'graphql-modules';
+import { createModule, gql } from 'graphql-modules'
 
 export const otherModule = createModule({
   id: 'other-module',
@@ -280,8 +280,8 @@ export const otherModule = createModule({
     type User {
       name: String
     }
-  `,
-});
+  `
+})
 ```
 
 </TabItem>
@@ -300,16 +300,16 @@ The `testkit.testModule()` let's you do it with `modules` options.
 It accepts an array of modules and has exactly the same effect as `createAppliction({ modules: [...] })`.
 
 ```typescript
-import 'reflect-metadata';
-import { testkit } from 'graphql-modules';
-import { myModule } from './my-module';
-import { otherModule } from './other-module';
+import 'reflect-metadata'
+import { testkit } from 'graphql-modules'
+import { myModule } from './my-module'
+import { otherModule } from './other-module'
 
 test('ing', () => {
   const app = testkit.testModule(myModule, {
-    modules: [otherModule],
-  });
-});
+    modules: [otherModule]
+  })
+})
 ```
 
 ### Providers and Middlewares
@@ -319,27 +319,27 @@ The `testkit.testModule()` accepts `providers` and `middlewares`. They both end 
 More on that in next two sections: [Testing Providers](#testing-providers), [Testing Middlewares](#testing-middlewares).
 
 ```typescript
-import 'reflect-metadata';
-import { testkit } from 'graphql-modules';
-import { myModule } from './my-module';
-import { myMiddleware } from './my-middleware';
-import { MyProvider } from './my-provider';
+import 'reflect-metadata'
+import { testkit } from 'graphql-modules'
+import { myModule } from './my-module'
+import { myMiddleware } from './my-middleware'
+import { MyProvider } from './my-provider'
 
 test('ing', () => {
   const app = testkit.testModule(myModule, {
     providers: [
       {
         provide: MyProvider,
-        useValue: {},
-      },
+        useValue: {}
+      }
     ],
     middlewares: {
       Query: {
-        '*': [myMiddleware],
-      },
-    },
-  });
-});
+        '*': [myMiddleware]
+      }
+    }
+  })
+})
 ```
 
 ### Executing operations
@@ -351,9 +351,9 @@ The `testkit.testModule` calls `createApplication` internally, this way we keep 
 We highly recommend to test the entire execution flow instead of focusing on individual pieces. That's why `testkit` ships with `execute` helper.
 
 ```typescript
-import 'reflect-metadata';
-import { testkit, gql } from 'graphql-modules';
-import { myModule, UsersProvider } from './my-module';
+import 'reflect-metadata'
+import { testkit, gql } from 'graphql-modules'
+import { myModule, UsersProvider } from './my-module'
 
 test('ing', async () => {
   const app = testkit.testModule(myModule, {
@@ -363,13 +363,13 @@ test('ing', async () => {
         useValue: {
           getCurrentUser() {
             return {
-              name: 'Bob',
-            };
-          },
-        },
-      },
-    ],
-  });
+              name: 'Bob'
+            }
+          }
+        }
+      }
+    ]
+  })
 
   const result = testkit.execute(app, {
     document: gql`
@@ -378,11 +378,11 @@ test('ing', async () => {
           name
         }
       }
-    `,
-  });
+    `
+  })
 
-  expect(result.data.me.name).toEqual('Bob');
-});
+  expect(result.data.me.name).toEqual('Bob')
+})
 ```
 
 The `testkit.execute` doesn't help a lot but without it, you would have to call `app.createExecution`, extract `app.schema` and put it all together to execute an operation. Two lines of code you don't need to worry about!
@@ -404,52 +404,52 @@ values={[
 <TabItem value="test">
 
 ```typescript
-import 'reflect-metadata';
-import { testkit } from 'graphql-modules';
-import { Logger, LoggerTransport } from './logger';
+import 'reflect-metadata'
+import { testkit } from 'graphql-modules'
+import { Logger, LoggerTransport } from './logger'
 
 test('ing', () => {
-  const transportLogSpy = jest.fn();
+  const transportLogSpy = jest.fn()
   const injector = testkit.testInjector([
     Logger,
     {
       provide: LoggerTransport,
       useValue: {
-        log: transportLogSpy,
-      },
-    },
-  ]);
+        log: transportLogSpy
+      }
+    }
+  ])
 
-  const logger = injector.get(Logger);
+  const logger = injector.get(Logger)
 
-  logger.log('hello');
+  logger.log('hello')
 
-  expect(transportLogSpy).toHaveBeenCalledWith('hello');
-});
+  expect(transportLogSpy).toHaveBeenCalledWith('hello')
+})
 ```
 
 </TabItem>
 <TabItem value="provider">
 
 ```typescript
-import { Injectable, Inject, InjectionToken, Scope } from 'graphql-modules';
+import { Injectable, Inject, InjectionToken, Scope } from 'graphql-modules'
 
 export const LoggerTransport = new InjectionToken<ILoggerTransport>(
   'logger-transport'
-);
+)
 
 export interface ILoggerTransport {
-  log(msg: string): void;
+  log(msg: string): void
 }
 
 @Injectable({
-  scope: Scope.Singleton,
+  scope: Scope.Singleton
 })
 export class Logger {
   constructor(@Inject(LoggerTransport) private transport: ILoggerTransport) {}
 
   log(msg: string) {
-    this.transport.log(msg);
+    this.transport.log(msg)
   }
 }
 ```
@@ -467,15 +467,15 @@ From the performance perspective, it's important to make sure all sinleton provi
 Let's use again the `Logger` example. This time we want to check the scope of the provider.
 
 ```typescript
-import 'reflect-metadata';
-import { testkit, Scope } from 'graphql-modules';
-import { Logger } from './logger';
+import 'reflect-metadata'
+import { testkit, Scope } from 'graphql-modules'
+import { Logger } from './logger'
 
 test('ing', () => {
-  const options = testkit.readProviderOptions(Logger);
+  const options = testkit.readProviderOptions(Logger)
 
-  expect(options.scope).toEqual(Scope.Singleton);
-});
+  expect(options.scope).toEqual(Scope.Singleton)
+})
 ```
 
 The `testkit.readProviderOptions` returns the `ProviderOptions` object with `scope`, `global` and `executionContextIn` properties.
@@ -496,12 +496,12 @@ values={[
 <TabItem value="test">
 
 ```typescript
-import 'reflect-metadata';
-import { testkit, gql } from 'graphql-modules';
-import { myModule } from './my-module';
+import 'reflect-metadata'
+import { testkit, gql } from 'graphql-modules'
+import { myModule } from './my-module'
 
 test('ing', () => {
-  const app = testkit.testModule(myModule);
+  const app = testkit.testModule(myModule)
 
   const result = await testkit.execute(app, {
     document: gql`
@@ -512,21 +512,21 @@ test('ing', () => {
       }
     `,
     contextValue: {
-      isLoggedIn: false,
-    },
-  });
+      isLoggedIn: false
+    }
+  })
 
-  expect(result.errors).toHaveLength(1);
-  expect(result.data.me).toBeNull();
-});
+  expect(result.errors).toHaveLength(1)
+  expect(result.data.me).toBeNull()
+})
 ```
 
 </TabItem>
 <TabItem value="module">
 
 ```typescript
-import { createModule, gql } from 'graphql-modules';
-import { AuthProvider, authMiddleware } from './auth';
+import { createModule, gql } from 'graphql-modules'
+import { AuthProvider, authMiddleware } from './auth'
 
 export const myModule = createModule({
   id: 'my-module',
@@ -543,43 +543,43 @@ export const myModule = createModule({
     Query: {
       me() {
         return {
-          name: 'Bob',
-        };
-      },
-    },
+          name: 'Bob'
+        }
+      }
+    }
   },
   providers: [AuthProvider],
   middleware: {
     Query: {
-      me: [authMiddleware],
-    },
-  },
-});
+      me: [authMiddleware]
+    }
+  }
+})
 ```
 
 </TabItem>
 <TabItem value="auth">
 
 ```typescript
-import { Injectable, Inject, Scope, CONTEXT } from 'graphql-modules';
+import { Injectable, Inject, Scope, CONTEXT } from 'graphql-modules'
 
 @Injectable({
-  scope: Scope.Operation,
+  scope: Scope.Operation
 })
 export class AuthProvider {
   constructor(@Inject(CONTEXT) private context: { isLoggedIn: boolean }) {}
 
   isLoggedIn() {
-    return this.context.isLoggedIn === true;
+    return this.context.isLoggedIn === true
   }
 }
 
 async function authMiddleware({ context }, next) {
   if (!context.injector.get(AuthProvider).isLoggedIn()) {
-    throw new Error('Not logged in');
+    throw new Error('Not logged in')
   }
 
-  return next();
+  return next()
 }
 ```
 
