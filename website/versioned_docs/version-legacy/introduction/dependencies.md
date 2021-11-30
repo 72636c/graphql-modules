@@ -11,7 +11,7 @@ To add a dependency to another module, start by adding the `imports` array to yo
 
 To see it in action, let's add a new module called `my-second-module`:
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import * as typeDefs from './schema.graphql'
 import resolvers from './resolvers'
@@ -24,7 +24,7 @@ export const MySecondModule = new GraphQLModule({
 
 Now, we can add a direct dependency by adding to our first module:
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import * as typeDefs from './schema.graphql'
 import resolvers from './resolvers'
@@ -47,7 +47,7 @@ Now GraphQL Modules will make sure to load and initialize `MySecondModule` befor
 
 You can exclude some types or only some fields from a specific type while importing a module's schema into another by using `withExclusionsFromSchema` like below;
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import * as typeDefs from './schema.graphql'
 import resolvers from './resolvers'

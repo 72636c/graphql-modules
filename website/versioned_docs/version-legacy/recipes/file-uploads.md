@@ -17,7 +17,7 @@ Check the following recipes for GraphQL Express and Apollo Server.
 Let's assume we have something like the following at the beginning.
 As you can seem we add the `graphqlUploadExpress` middleware into `/graphql` route to handle file uploads and pass data through the resolvers.
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import * as express from 'express'
 import * as graphqlHTTP from 'express-graphql'
@@ -42,7 +42,7 @@ app.listen(4000)
 If you are using apollo-server, you don't have to add the express middleware.
 You just need to add the `uploads` field to your Apollo Server configuration:
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import { ApolloServer } from 'apollo-server'
 
@@ -74,7 +74,7 @@ In the example, we create a new module called `UploadModule` and put everything 
 
 `upload.module.ts`
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import gql from 'graphql-tag'
 import { GraphQLUpload } from 'graphql-upload'
@@ -93,7 +93,7 @@ export const UploadModule = new GraphQLModule({
 
 Let's assume we have `ImageModule` and we want to add a mutation to it for uploading an image to our server:
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import gql from 'graphql-tag'
 import { UploadModule } from '../upload.module'

@@ -30,7 +30,7 @@ modules/
 
 You can easily load all of your `.graphql` files and `.ts` resolvers files like below:
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import { loadResolversFiles, loadSchemaFiles } from 'graphql-toolkit'
 
@@ -48,7 +48,7 @@ You can also write your schema and resolvers in different files and then import 
 
 `modules/my-module/index.ts`
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import resolvers from './resolvers'
 import * as typeDefs from './schema.graphql'
@@ -61,7 +61,7 @@ export const UserModule = new GraphQLModule({
 
 `modules/my-module/resolvers.ts`
 
-```typescript
+```ts
 export default {
   User: {
     id: () => {}
@@ -88,7 +88,7 @@ type Query {
 
 The simplest way to load your schema and resolvers into a module is to write them directly on your `GraphQLModule` definition:
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import gql from 'graphql-tag'
 

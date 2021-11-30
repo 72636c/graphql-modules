@@ -10,7 +10,7 @@ You can define a provider and add it to your module.
 
 `modules/my-module/user.provider.ts`
 
-```typescript
+```ts
 import { Injectable } from '@graphql-modules/di'
 
 @Injectable()
@@ -46,7 +46,7 @@ And inject the data using the `injector` in the `context` of your resolvers.
 
 `modules/my-module/resolvers.ts`
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import { UserProvider } from './user.provider'
 export default {
@@ -65,7 +65,7 @@ Then add all these in your module definition.
 
 `modules/my-module/index.ts`
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import * as typeDefs from './schema.graphql'
 import resolvers from './resolvers'

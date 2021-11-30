@@ -14,7 +14,7 @@ yarn add apollo-server
 
 Then create a new instance of `ApolloServer` and use your `GraphQLModule` instance to generate the config to pass to the `ApolloServer` constructor:
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import { ApolloServer } from 'apollo-server'
 

@@ -14,7 +14,7 @@ If you want to use them as providers, you can extend the `DataLoader` class to b
 
 ## As Provider
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core';
 import { ProviderScope } from '@graphql-modules/di';
 import DataLoader from 'dataloader';
@@ -38,7 +38,7 @@ export const UserModule = new GraphQLModule({
 
 ### With Dependency Injection
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import { InjectFunction } from '@graphql-modules/di'
 import { MyExternalDataProvider } from './my-external-data-provider'
@@ -68,7 +68,7 @@ export const UserModule = new GraphQLModule({
 
 You can see how to generate DataLoader in GraphQLModules using factory functions and dependency injection.
 
-```typescript
+```ts
 import { GraphQLModule, ModuleSessionInfo } from '@graphql-modules/core';
 import { InjectFunction, ProviderScope } from '@graphql-modules/di';
 
@@ -97,7 +97,7 @@ export const UserModule = new GraphQLModule({
 
 ## In Providers with Dependency Injection
 
-```typescript
+```ts
 import { Injectable, ProviderScope } from '@graphql-modules/di'
 import DataLoader from 'dataloader'
 import { MyExternalDataProvider } from './my-external-data-provider'

@@ -18,7 +18,7 @@ Let's start by creating a simple class `UserProvider` with the `@Injectable()` d
 
 `modules/my-module/user.provider.ts`
 
-```typescript
+```ts
 import { Injectable } from '@graphql-modules/di'
 
 @Injectable()
@@ -27,7 +27,7 @@ export class UserProvider {}
 
 Now, let's add this `Provider` to our `GraphQLModule`:
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import * as typeDefs from './schema.graphql'
 import resolvers from './resolvers'
@@ -42,7 +42,7 @@ export const MyModule = new GraphQLModule({
 
 Now, let's implement the `Query.user` resolver as a simple function inside `UserProvider`:
 
-```typescript
+```ts
 import { Injectable } from '@graphql-modules/di'
 
 @Injectable()

@@ -29,7 +29,7 @@ Let's implement the resolvers object. For now we will use just static mocked obj
 
 `modules/my-module/resolvers.ts`
 
-```typescript
+```ts
 export default {
   Query: {
     user: (root, { id }) => {
@@ -50,7 +50,7 @@ Now, update your `GraphQLModule` declaration to load the resolvers:
 
 `modules/my-module/index.ts`
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import * as typeDefs from './schema.graphql'
 import resolvers from './resolvers'

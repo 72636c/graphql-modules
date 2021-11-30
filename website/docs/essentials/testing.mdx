@@ -11,7 +11,7 @@ GraphQL Modules provides a set of utilities for testing your modules and also fo
 
 To access the testing utilities, import `testkit` object from `graphql-modules` package:
 
-```typescript
+```ts
 import { testkit } from 'graphql-modules'
 ```
 
@@ -31,7 +31,7 @@ The `testkit.mockApplication()` resolves a `MockedApplication` object that exten
 
 One of those methods is `replaceModule()`. In combination with `testkit.mockModule()`, it allows you to modify a module and overwrite its providers.
 
-```typescript
+```ts
 import 'reflect-metadata'
 import { testkit } from 'graphql-modules'
 import { application } from './application'

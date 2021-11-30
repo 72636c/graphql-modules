@@ -10,7 +10,7 @@ Just like GraphQL Schema, GraphQL Modules follow the same rules of writing SDL (
 
 To get started with type definitions in your module, make sure to use `gql` (you can import it from `graphql-modules`) or `parse` (from `graphql`) to convert your string SDL definition into a `DocumentNode` object.
 
-```typescript
+```ts
 import { createModule, gql } from 'graphql-modules'
 
 export const myModule = createModule({

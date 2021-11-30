@@ -23,7 +23,7 @@ GraphQL Modules won't load any other things such as injectors, resolvers and pro
 
 `src/schema.ts`
 
-```typescript
+```ts
 import { AppModule } from './modules/app.module'
 
 // Get typeDefs from top module, and export it
@@ -70,7 +70,7 @@ You can add a script to `package.json`.
 
 Then you can use these generated typings everywhere in your project;
 
-```typescript
+```ts
 import { UsersProvider } from '../providers/users.provider'
 import { QueryResolvers } from '../../generated-models'
 

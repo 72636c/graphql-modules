@@ -9,7 +9,7 @@ title: API Reference
 
 `CONTEXT` is an InjectionToken representing the provided `GraphQLModules.GlobalContext`
 
-```typescript
+```ts
 import { CONTEXT, Inject, Injectable } from 'graphql-modules'
 
 @Injectable()
@@ -24,7 +24,7 @@ export class Data {
 
 `MODULE_ID` is an InjectionToken representing module's ID
 
-```typescript
+```ts
 import { MODULE_ID, Inject, Injectable } from 'graphql-modules'
 
 @Injectable()
@@ -70,7 +70,7 @@ Application's configuration object. Represents the first argument of `createAppl
 
 Creates Application out of Modules. Accepts `ApplicationConfig`.
 
-```typescript
+```ts
 import { createApplication } from 'graphql-modules'
 import { usersModule } from './users'
 import { postsModule } from './posts'
@@ -87,7 +87,7 @@ const app = createApplication({
 
 Creates a Module, an element used by Application. Accepts `ModuleConfig`.
 
-```typescript
+```ts
 import { createModule, gql } from 'graphql-modules'
 
 export const usersModule = createModule({

@@ -19,7 +19,7 @@ Since it's a very simple API, you can implement your own way of sending messages
 
 You can implement your own message transmitter by implementing `PubSub` interface:
 
-```typescript
+```ts
 export class MyPubSub {
   subscribe<T = any>(event: string, handler: (payload: T) => void): { unsubscribe: () => void } {
     // 1. You need to keep a record between the event and the handler
@@ -39,7 +39,7 @@ export class MyPubSub {
 
 Make sure to use it in a `GraphQLModule` declaration:
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 
 const CommunicationModule = new GraphQLModule({
@@ -56,7 +56,7 @@ Another useful trick is to use external PubSub services such as **[Redis PubSub]
 
 You can easily create a `RedisPubSub` this way:
 
-```typescript
+```ts
 import * as redis from 'redis'
 
 export class PubSub {

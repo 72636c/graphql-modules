@@ -14,7 +14,7 @@ GraphQL is just a specification and Express GraphQL or Apollo Server are Node im
 
 For Queries and Mutations we use `createExecution()` method to create an execution logic, in case of Subscriptions it's very similar. We construct subscription phase with `createSubscription()` method and provide it to a GraphQL server.
 
-```typescript
+```ts
 import { createApplication } from 'graphql-modules'
 
 const application = createApplication({
@@ -36,7 +36,7 @@ We recommend to use [`graphql-subscriptions`](https://github.com/apollographql/g
 
 Provide `PubSub` with an instance as the value so as a singleton service it becomes available across all modules.
 
-```typescript title="application.ts"
+```ts title="application.ts"
 import { createApplication } from 'graphql-modules'
 import { PubSub } from 'graphql-subscriptions'
 import { myModule } from './my-module'

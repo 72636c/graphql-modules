@@ -12,7 +12,7 @@ yarn add express express-graphql
 
 Then,
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import * as express from 'express'
 import * as graphqlHTTP from 'express-graphql'

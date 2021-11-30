@@ -14,7 +14,7 @@ Or Npm:
 
 Then, create your `GraphQLModule` instance:
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 
 const graphQlModule = new GraphQLModule({

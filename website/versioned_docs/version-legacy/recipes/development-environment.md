@@ -102,7 +102,7 @@ And you can add custom mapping to your `tsconfig.json` file:
 
 You can now import files between modules like below:
 
-```typescript
+```ts
 import { SomeProvider } from '@modules/my-module'
 ```
 

@@ -20,7 +20,7 @@ Let's assume we have a `Chat` type for base fields shared with the entity.
 
 `chat.type.ts`
 
-```typescript
+```ts
 import { ObjectType, Field, ID } from 'type-graphql'
 
 @ObjectType()
@@ -40,7 +40,7 @@ Create another class for our queries and mutations based on this type:
 
 `chat.resolver.ts`
 
-```typescript
+```ts
 import { ChatsProvider } from './chats.provider'
 import { Resolver, Mutation, Arg, Int, Query } from 'type-graphql'
 import { Chat } from './chat.type'
@@ -84,7 +84,7 @@ Then let's create our module:
 
 `chat.module.ts`
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import { ChatsProvider } from './chats.provider'
 import { buildSchemaSync } from 'type-graphql'
@@ -116,7 +116,7 @@ You can merge different modules from different implementations like below.
 So you don't have to use the same implementation method in all modules.
 GraphQL Modules will handle schema merging for you, even if they are from different implementations.
 
-```typescript
+```ts
 new GraphQLModule({
   imports: [
     XModuleCreatedUsingSchemaFirst,

@@ -14,7 +14,7 @@ GraphQL Modules exposes a global namespace called `GraphQLModules`, so there's n
 
 To extend `GraphQLModules.Context`, add a declaration statement in your code to add new type properties to `GraphQLModules.GlobalContext` (which makes up part of `GraphQLModules.Context`):
 
-```typescript
+```ts
 declare global {
   namespace GraphQLModules {
     interface GlobalContext {
@@ -33,7 +33,7 @@ Now that you've extended the `Context` type based on your actual context shape, 
 
 Using `GraphQLModules.Context` is simple and because GraphQL Modules makes it a globally available type, you just use it, there's no need to import it from `graphql-modules` package. You can use it directly in your resolvers by typing the `context` argument:
 
-```typescript
+```ts
 const resolvers = {
   Query: {
     myQuery(root, args, context: GraphQLModules.Context, info) {

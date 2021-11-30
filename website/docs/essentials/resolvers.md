@@ -13,7 +13,7 @@ Modules created by GraphQL-Modules are smart enough to detect incorrect resolver
 
 Let's take for an example the following schema for `User` and `Query`.
 
-```typescript
+```ts
 import { createModule, gql } from 'graphql-modules'
 
 export const myModule = createModule({

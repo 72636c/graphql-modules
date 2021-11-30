@@ -22,7 +22,7 @@ values={[
 ]}>
 <TabItem value="service">
 
-```typescript
+```ts
 import { Injectable, createModule } from 'graphql-modules'
 
 @Injectable()
@@ -38,7 +38,7 @@ export const myModule = createModule({
 </TabItem>
 <TabItem value="factory">
 
-```typescript
+```ts
 import { Injectable, InjectionToken, createModule } from 'graphql-modules'
 
 const Env = new InjectionToken<'production' | 'development'>('environment')

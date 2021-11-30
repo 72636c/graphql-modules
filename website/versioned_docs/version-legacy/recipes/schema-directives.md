@@ -6,7 +6,7 @@ sidebar_label: Schema Directives
 
 GraphQL Modules allows you to define schema directives on a per-module basis. For example, we can add a schema directive to our module like this:
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core';
 import { SchemaDirectiveVisitor } from 'graphql-tools';
 
@@ -56,7 +56,7 @@ const { schema } = new GraphQLModule({
 
 GraphQL Modules won't automatically apply your directives when it generates a schema for a module to avoid applying the same directive more than once. However, you can set the `visitSchemaDirectives` option to `true` in your root module and the directives from all your combined modules will be applied to your final schema.
 
-```typescript
+```ts
 const { schema } = new GraphQLModule({
   typeDefs,
   resolvers,

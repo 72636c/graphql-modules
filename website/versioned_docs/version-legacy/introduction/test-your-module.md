@@ -12,7 +12,7 @@ So let's start with a basic module definition:
 
 `modules/user/user.module.ts`
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import gql from 'graphql-tag'
 
@@ -51,7 +51,7 @@ You can mock providers by overwriting the existing provider definitions:
 
 tests/user.module.spec.ts
 
-```typescript
+```ts
 import { UserModule } from '../modules/user/user.module'
 import { execute } from 'graphql'
 describe('UserModule', () => {

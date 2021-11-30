@@ -12,7 +12,7 @@ Here is a quick example:
 
 `modules/my-first-module/index.ts`
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 import gql from 'graphql-tag'
 

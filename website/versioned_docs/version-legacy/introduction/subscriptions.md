@@ -8,14 +8,14 @@ Subscriptions are GraphQL operations that watch events emitted from your backend
 
 Subscriptions need to have defined `PubSub` implementation in your GraphQL Modules application.
 
-```typescript
+```ts
 import { PubSub } from 'graphql-subscriptions'
 export const CommonModule = new GraphQLModule({
   providers: [PubSub]
 })
 ```
 
-```typescript
+```ts
 export const PostModule = new GraphQLModule({
   imports: [CommonModule],
   providers: [PostsProvider],
@@ -60,7 +60,7 @@ export const PostModule = new GraphQLModule({
 
 You have to export `subscriptions` from your `AppModule`, and pass it to your GraphQL Server.
 
-```typescript
+```ts
 import { createServer } from 'http'
 import { SubscriptionServer } from 'subscriptions-transport-ws'
 import { execute, subscribe } from 'graphql'
@@ -108,7 +108,7 @@ server.listen().then(({ url, subscriptionsUrl }) => {
 
 Session life-time when using WebSocket is the same as the connection's. So, you can keep all the user state in your memory.
 
-```typescript
+```ts
 import { Injectable, ProviderScope } from '@graphql-modules/di'
 import { OnConnect } from '@graphql-modules/core'
 
@@ -142,7 +142,7 @@ export class AuthProvider implements OnConnect {
 
 ### Using in Resolvers
 
-```typescript
+```ts
     resolvers: {
         Subscription: {
           postAdded: {

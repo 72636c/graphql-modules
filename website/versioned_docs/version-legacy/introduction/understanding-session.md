@@ -16,7 +16,7 @@ GraphQL Modules tries to get the `session` property of your global application c
 
 For example, `express-graphql` passes `express.Request` by default as the global application context:
 
-```typescript
+```ts
 const MyModule = new GraphQLModule({
   context(session: express.Request) {
     return {
@@ -36,7 +36,7 @@ app.use(
 
 If we need more stuff in the network session:
 
-```typescript
+```ts
 interface MyModuleSession {
   req: express.Request,
   res: express.Response
@@ -64,7 +64,7 @@ app.use('/graphql', graphqlHTTP((req, res) => ({
 
 On the other hand, `apollo-server` needs to be passed it like below:
 
-```typescript
+```ts
 new ApolloServer({
   modules: [MyModule],
   context: ({ req, res }) => ({ req, res }),
@@ -85,10 +85,10 @@ GraphQL Modules internally handles `session` without the need of passing `sessio
 
 #### Using `modules` of `ApolloServer`
 
-```typescript
+```ts
 const MyAccountsModule = AccountsModule.forRoot({ ... });
 new ApolloServer({
-  modules: [MyAccountsModule]
+  modules: [MyAccountsModule],
   typeDefs: myTypeDefs,
   resolvers: myResolvers,
   context: ({ req, res }) => {
@@ -105,7 +105,7 @@ new ApolloServer({
 
 You can safely extract reusable `typeDefs`, `resolvers` and `context` from your `GraphQLModule`, and use it outside `GraphQLModule`.
 
-```typescript
+```ts
 import { mergeTypeDefs, mergeResolvers } from 'graphql-toolkit';
 
 const MyAccountsModule = AccountsModule.forRoot({ ... });

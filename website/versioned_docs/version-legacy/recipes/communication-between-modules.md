@@ -12,7 +12,7 @@ GraphQL Modules provides multiple ways of doing it, and you should pick the righ
 
 If your modules are coupled, you can use direct dependency injection.
 
-```typescript
+```ts
 import { Injectable } from '@graphql-modules/di'
 import { OtherProvider } from '../my-other-module/other.provider'
 
@@ -26,7 +26,7 @@ export class MyProvider {
 
 If you wish to make a module communicate with other modules without direct imports, you can use injection tokens:
 
-```typescript
+```ts
 import { Inject, Injectable } from '@graphql-modules/di'
 
 export interface IOtherProviderSignature {
@@ -43,7 +43,7 @@ export class MyProvider {
 
 Then, your app or other modules can use the following to implement it:
 
-```typescript
+```ts
 class MyImplementation implements IOtherProviderSignature {
   doSomething() {
     // ... some code ...
@@ -53,7 +53,7 @@ class MyImplementation implements IOtherProviderSignature {
 
 And provide it using `providers`:
 
-```typescript
+```ts
 { provide: MY_CLASS_TOKEN, useClass: MyImplementation }
 ```
 
@@ -69,7 +69,7 @@ First, you need to tell `GraphQLModule` how to transmit your messages. [graphql-
 
 To use it, pass the `PubSub` class as a provider in a shared `GraphQLModule` instance:
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core';
 import { PubSub } from 'graphql-subscriptions';
 
@@ -84,7 +84,7 @@ const CommonModule = new GraphQLModule({
 
 And import this common module when you want to use `PubSub`.
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 
 export const FooModule = new GraphQLModule({
@@ -92,7 +92,7 @@ export const FooModule = new GraphQLModule({
 })
 ```
 
-```typescript
+```ts
 import { GraphQLModule } from '@graphql-modules/core'
 
 export const BarModule = new GraphQLModule({
@@ -103,7 +103,7 @@ export const BarModule = new GraphQLModule({
 
 To use `PubSub`, you can do the following:
 
-```typescript
+```ts
 import { Injectable } from '@graphql-modules/di'
 import { PubSub } from 'graphql-subscriptions'
 

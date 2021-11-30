@@ -8,7 +8,7 @@ In GraphQL, a `context` is an object shared by all the resolvers of a specific e
 
 The context is available as the 3rd argument to each resolver:
 
-```typescript
+```ts
 const resolvers = {
   Query: {
     myQuery(root, args, context, info) {
@@ -28,7 +28,7 @@ You can manage your own `context` object based on your needs, usually it's done 
 
 The `Context` can be accessed directly in resolve function or within Dependency Injection using [`CONTEXT`](../api/api.md#context) token.
 
-```typescript
+```ts
 import { CONTEXT, Inject, Injectable } from 'graphql-modules'
 
 @Injectable()

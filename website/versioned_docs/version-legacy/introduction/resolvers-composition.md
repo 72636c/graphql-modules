@@ -11,7 +11,7 @@ With this feature, you can easily make sure each of your modules only performs t
 
 For example, if you have a simple server with authentication and you wish to make sure that one of your queries is protected and only allowed for authenticated users with the `EDITOR` role, your resolver needs to verify these rules as well:
 
-```typescript
+```ts
 const resolvers = {
   Query: {
     myQuery: (root, args, context) => {
@@ -48,7 +48,7 @@ The concept is similar to that of **middleware**.
 
 Let's strip the resolver of all the unnecessary code:
 
-```typescript
+```ts
 const resolvers = {
   Query: {
     myQuery: (root, args, context) => {
@@ -66,7 +66,7 @@ And let's create utility functions in different files with the logic we have rem
 
 We can implement authentication and authorization just like GraphQL resolvers; we need to tell GraphQL Modules that the process has succeeded by calling the `next` function.
 
-```typescript
+```ts
 export const isAuthenticated =
   () => next => async (root, args, context, info) => {
     if (!context.currentUser) {

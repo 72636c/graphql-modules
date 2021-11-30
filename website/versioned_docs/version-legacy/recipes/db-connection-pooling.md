@@ -18,7 +18,7 @@ See **[Dependency Injection](../introduction/dependency-injection.md)** to learn
 
 `database.module.ts`
 
-```typescript
+```ts
 import { Pool } from 'pg'
 export const DatabaseModule = new GraphQLModule({
   providers: [
@@ -40,7 +40,7 @@ See **[Dependency Injection](../introduction/dependency-injection.md)** to learn
 
 `database.provider.ts`
 
-```typescript
+```ts
 import { Injectable } from '@graphql-modules/di'
 import { SQLStatement } from 'sql-template-strings'
 import { Pool, PoolClient } from 'pg'
@@ -69,7 +69,7 @@ You can also combine it with data-loaders to solve the `N+1` problem in SQL quer
 
 `database.provider.ts`
 
-```typescript
+```ts
 import { Pool, PoolClient, QueryResultBase, QueryResult } from 'pg'
 import { Injectable, ProviderScope } from '@graphql-modules/di'
 import { OnRequest, OnResponse } from '@graphql-modules/core'
@@ -124,7 +124,7 @@ Thanks to this approach, you can use transactions inside GraphQL Modules like be
 
 `user.entity.ts`
 
-```typescript
+```ts
 interface UserEntity {
   id: string
   name: string
@@ -134,7 +134,7 @@ interface UserEntity {
 
 `users.provider.ts`
 
-```typescript
+```ts
 import { UserEntity } from './user.entity'
 
 @Injectable({
@@ -184,7 +184,7 @@ You can create a MongoDB pool and connect it at the beginning of each network re
 
 `database.module.ts`
 
-```typescript
+```ts
 import { Pool, createPool } from 'generic-pool'
 import { MongoClient } from 'mongodb'
 import { GraphQLModule } from '@graphql-modules/core'
@@ -206,7 +206,7 @@ export const DatabaseModule = new GraphQLModule({
 
 `database.provider.ts`
 
-```typescript
+```ts
 import { Pool } from 'generic-pool'
 import { Injectable, ProviderScope } from '@graphql-modules/di'
 import { OnRequest, OnResponse } from '@graphql-modules/core'

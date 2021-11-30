@@ -13,7 +13,7 @@ Thanks to `@ExecutionContext` decorator, every `Singleton` provider gets access 
 
 Take a look at the example below.
 
-```typescript
+```ts
 import { Injectable, ExecutionContext } from 'graphql-modules'
 import { Config } from './config'
 

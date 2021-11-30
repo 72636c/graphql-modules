@@ -27,14 +27,14 @@ Using a `class` provider in GraphQL Modules is the easiest approach to DI. The c
 
 Every Service should be decorated with `@Injectable` as follows:
 
-```typescript title="data.ts"
+```ts title="data.ts"
 import { Injectable } from 'graphql-modules'
 
 @Injectable()
 export class Data {}
 ```
 
-```typescript title="module.ts"
+```ts title="module.ts"
 import { createModule } from 'graphql-modules'
 import { Data } from './data'
 
