@@ -42,14 +42,11 @@ export function getRoutes(): IRoutes {
             $name: 'Recipes',
             $routes: ['dataloader', 'migration'],
           },
-          api: {
-            $name: 'API',
-            $routes: ['api'],
-          },
         },
       },
     },
   };
+
   GenerateRoutes({
     Routes,
     folderPattern: 'docs',
@@ -57,5 +54,5 @@ export function getRoutes(): IRoutes {
     basePathLabel: 'Documentation',
   });
 
-  return Routes;
+  return Routes
 }
